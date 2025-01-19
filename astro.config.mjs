@@ -23,6 +23,9 @@ export default defineConfig({
   integrations: [mdx(), sitemap(), tailwind(), react()],
 
   vite: {
+    ssr: {
+      external: ['node:buffer'],
+    },
     build: {
       rollupOptions: {
         output: {
