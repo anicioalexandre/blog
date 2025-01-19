@@ -23,7 +23,7 @@ export const POST: APIRoute = async ({ cookies, locals, request }) => {
 
   const requestJson = await request.json()
 
-  const graphqlResponse = await fetch(env.GITHUB_GRAPHQL_API_URL, {
+  const graphqlResponse = await fetch(env.PUBLIC_GITHUB_GRAPHQL_API_URL, {
     method: 'POST',
     headers: graphqlHeaders,
     body: JSON.stringify(requestJson),

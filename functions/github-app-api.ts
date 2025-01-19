@@ -41,7 +41,7 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
     graphqlHeaders.append('Content-Type', 'application/json')
     graphqlHeaders.append('User-Agent', 'GitHub-App-GraphQL-Proxy')
 
-    const graphqlResponse = await fetch(env.GITHUB_GRAPHQL_API_URL, {
+    const graphqlResponse = await fetch(env.PUBLIC_GITHUB_GRAPHQL_API_URL, {
       method: 'POST',
       headers: graphqlHeaders,
       body: JSON.stringify(requestJson),

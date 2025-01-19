@@ -3,8 +3,6 @@
 interface Env {
 	CSRF_TOKENS: KVNamespace;
 	GH_APP: KVNamespace;
-	GITHUB_OAUTH_API_URL: "https://github.com/login/oauth";
-	GITHUB_GRAPHQL_API_URL: "https://api.github.com/graphql";
 	GITHUB_APP_CLIENT_ID: string;
 	GITHUB_APP_CLIENT_SECRET: string;
 	GITHUB_APP_ID: string;

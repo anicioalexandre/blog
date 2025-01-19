@@ -17,7 +17,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     }),
   )
 
-  const githubAuthUrl = new URL(`${env.GITHUB_OAUTH_API_URL}/authorize`)
+  const githubAuthUrl = new URL(`${env.PUBLIC_GITHUB_OAUTH_API_URL}/authorize`)
   githubAuthUrl.searchParams.set('client_id', clientId)
   githubAuthUrl.searchParams.set('redirect_uri', redirectUri)
   githubAuthUrl.searchParams.set('scope', 'read:discussion write:discussion')

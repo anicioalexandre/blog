@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "wrangler types && pnpm relay && astro dev",
     "build": "wrangler types && pnpm relay && astro build",
+    "lint": "echo TODO: add lint",
     "clean": "rm -rf .astro .wrangler dist node_modules",
     "preview": "wrangler types && astro preview",
     "astro": "astro",
@@ -61,5 +62,9 @@
     "relay-compiler": "^18.2.0",
     "sharp": "^0.33.5",
     "typescript": "^5.7.3"
-  }
+  },
+  "engines": {
+    "node": ">=20.17.0"
+  },
+  "packageManager": "pnpm@9.12.0"
 }

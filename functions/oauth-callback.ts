@@ -28,7 +28,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
 
   await env.CSRF_TOKENS.delete(csrfToken)
 
-  const response = await fetch(`${env.GITHUB_OAUTH_API_URL}/access_token`, {
+  const response = await fetch(`${env.PUBLIC_GITHUB_OAUTH_API_URL}/access_token`, {
     method: 'POST',
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
     body: JSON.stringify({

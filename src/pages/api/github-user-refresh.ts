@@ -21,7 +21,7 @@ export const POST: APIRoute = async ({ cookies, locals }) => {
   gitHubHeaders.append('Content-Type', 'application/json')
   gitHubHeaders.append('Accept', 'application/json')
 
-  const response = await fetch(`${env.GITHUB_OAUTH_API_URL}/access_token`, {
+  const response = await fetch(`${env.PUBLIC_GITHUB_OAUTH_API_URL}/access_token`, {
     method: 'POST',
     headers: gitHubHeaders,
     body: JSON.stringify({
