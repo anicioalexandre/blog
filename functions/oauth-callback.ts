@@ -58,7 +58,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   setSecureCookie({ headers, key: GITHUB_USER_REFRESH_TOKEN, value: userRefreshToken })
   setCookie({ headers, key: GITHUB_USER_LOGGED_IN, value: '1' })
 
-  const redirectUrl = `${env.WEBSITE_URL}${redirectTo ?? '/'}`
+  const redirectUrl = `${env.PUBLIC_WEBSITE_URL}${redirectTo ?? '/'}`
   headers.set('Location', redirectUrl || '/')
   return new Response(null, { status: 302, headers })
 }

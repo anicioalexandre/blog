@@ -36,7 +36,7 @@ export const setCorsHeaders = (headers: Headers) => {
 }
 
 export const verifyOrigin = (request: Request) => {
-  if (request.headers.get('Origin') !== process.env.WEBSITE_URL) {
+  if (request.headers.get('Origin') !== process.env.PUBLIC_WEBSITE_URL) {
     return new Response('Forbidden', { status: 403 })
   }
 }

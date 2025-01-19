@@ -9,8 +9,6 @@ interface Props {
   post: BlogPost
 }
 const { post } = Astro.props
-
-const minutesRead = readingTime(post.body).text
 ---
 
 <a href={`blog/${post.id}`} class="max-h-[200px] max-w-[300px] transition-opacity hover:opacity-85">
@@ -26,7 +24,7 @@ const minutesRead = readingTime(post.body).text
     />
     <div class="grid">
       <p class="prose-body1 justify-self-stretch text-wrap text-object-low">
-        {formatDate(post.data.date)} - {minutesRead}
+        {formatDate(post.data.date)} - {post.data.minutesRead}
       </p>
       <h5 class="prose-h5 text-wrap text-object-high">{post.data.title}</h5>
       <p class="prose-body1 text-wrap text-object-low">{post.data.description}</p>

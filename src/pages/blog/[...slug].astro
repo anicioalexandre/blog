@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets'
 import { getCollection } from 'astro:content'
-import readingTime from 'reading-time'
 
 import RootLayout from 'layouts/RootLayout.astro'
 import Tag from 'components/design-system/Tag/index.astro'
@@ -20,7 +19,8 @@ export const getStaticPaths = async () => {
 
 const postToFind = await getCollection('blog', (entry) => entry.id === Astro.params.slug)
 const post = postToFind[0]
-const minutesRead = readingTime(post.body!).text
+
+export const prerender = true
 ---
 
 <RootLayout title={post.data.title} description={post.data.description} image={post.data.hero.src}>
@@ -29,7 +29,7 @@ const minutesRead = readingTime(post.body!).text
       <h1 class="prose-h1">{post.data.title}</h1>
       <div class="grid gap-2 md:grid-cols-[max-content_1fr] md:gap-4">
         <p class="prose-body1 text-wrap text-object-low">
-          {formatDate(post.data.date)} - {minutesRead}
+          {formatDate(post.data.date)} - {post.data.minutesRead}
         </p>
         <div class="flex space-x-2">
           {post.data.tags.map((tag) => <Tag>{tag}</Tag>)}

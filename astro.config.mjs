@@ -4,7 +4,6 @@ import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
 import { babel } from '@rollup/plugin-babel'
-import commonjs from '@rollup/plugin-commonjs'
 import { defineConfig } from 'astro/config'
 
 import { config } from './src/constants/site'
@@ -41,7 +40,6 @@ export default defineConfig({
         extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx'],
         plugins: ['relay'],
       }),
-      commonjs(),
     ],
   },
 

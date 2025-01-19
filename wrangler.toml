@@ -24,7 +24,7 @@ id = "5a83e4ece44a410d8cf54f7e1b08f1fe"
 GITHUB_OAUTH_API_URL="https://github.com/login/oauth"
 GITHUB_GRAPHQL_API_URL="https://api.github.com/graphql"
 GITHUB_APP_REDIRECT_URI="https://worker.alexandreanicio.dev/oauth-callback"
-WEBSITE_URL="http://localhost:4321"
+PUBLIC_WEBSITE_URL="http://localhost:4321"
 
 # Automatically place your workloads in an optimal location to minimize latency.
 # If you are running back-end logic in a Pages Function, running it closer to your back-end infrastructure
