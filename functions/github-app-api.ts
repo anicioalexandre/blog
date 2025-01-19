@@ -3,8 +3,6 @@ import { createAppAuth } from '@octokit/auth-app'
 import { setCorsHeaders, verifyOrigin } from '../utils/api'
 
 export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
-  verifyOrigin(request)
-
   if (request.method === 'OPTIONS') {
     const headers = new Headers()
     setCorsHeaders(headers)
@@ -12,6 +10,8 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
       headers,
     })
   }
+
+  verifyOrigin(request)
 
   if (request.method === 'POST') {
     const requestJson = await request.json()
