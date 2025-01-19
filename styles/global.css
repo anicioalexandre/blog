@@ -1,0 +1,38 @@
+@import './fonts.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .h-full-minus-layout {
+    @apply min-h-[calc(100vh-94px-73px)] md:min-h-[calc(100vh-72px-97px)];
+  }
+
+  .reply-timeline {
+    @apply relative;
+  }
+
+  .reply-timeline::before {
+    @apply absolute bottom-0 left-[30px] top-0 block w-[2px] bg-surface-border content-[''] first:top-[12px];
+  }
+
+  .markdown {
+    @apply prose-body2 text-object-high;
+    em {
+      @apply italic text-object-low;
+    }
+
+    blockquote {
+      @apply border-l-4 border-l-primary-main pl-4 italic text-object-low;
+    }
+
+    pre {
+      @apply rounded bg-surface-border p-1;
+    }
+
+    code {
+      @apply rounded-sm px-2 py-1 text-primary-contrast;
+    }
+  }
+}

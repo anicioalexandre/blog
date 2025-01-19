@@ -1,0 +1,56 @@
+---
+import { ClientRouter } from 'astro:transitions'
+
+import { config } from 'constants/site'
+
+interface Props {
+  title: string
+  description?: string
+  image?: string
+  articleDate?: string
+}
+const { title, description = config.description, image, articleDate } = Astro.props
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+
+const socialImageURL = new URL(image ? image : '/aa.png', Astro.url).href
+
+const siteTitle = `${title} | ${config.title}`
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="generator" content={Astro.generator} />
+
+<link rel="canonical" href={canonicalURL} />
+
+<title>{siteTitle}</title>
+
+<ClientRouter />
+
+<meta name="title" content={siteTitle} />
+<meta name="description" content={description} />
+<meta name="author" content={config.author} />
+
+<meta property="og:type" content={articleDate ? 'article' : 'website'} />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={socialImageURL} />
+{
+  articleDate && (
+    <>
+      <meta property="article:author" content={config.author} />
+      <meta property="article:published_time" content={articleDate} />
+    </>
+  )
+}
+
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={socialImageURL} />
+
+<link rel="alternate" type="application/rss+xml" title={config.title} href="/rss.xml" />
