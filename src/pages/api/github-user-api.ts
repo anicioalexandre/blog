@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro'
 import type { GraphQLResponse, RequestParameters, Variables } from 'relay-runtime'
 
-import { GITHUB_USER_TOKEN } from '../../../constants/cookie'
+import { GITHUB_USER_TOKEN } from 'constants/cookie'
 
 export const POST: APIRoute = async ({ cookies, locals, request }) => {
   const { env } = locals.runtime
@@ -38,7 +38,6 @@ export const POST: APIRoute = async ({ cookies, locals, request }) => {
   const workerJson = await graphqlResponse.json()
 
   const workerHeaders = new Headers()
-  // setCorsHeaders(workerHeaders)
   workerHeaders.append('Content-Type', 'application/json')
 
   return new Response(JSON.stringify(workerJson), {

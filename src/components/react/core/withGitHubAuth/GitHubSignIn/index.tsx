@@ -4,7 +4,7 @@ import GitHubIcon from 'components/react/desing-system/icons/GitHubIcon'
 
 const GitHubSignIn = () => {
   const redirectTo = encodeURIComponent(window.location.pathname + '#comments')
-  const signInUrl = `${import.meta.env.PUBLIC_WORKER_URL}/oauth-login?redirect_to=${redirectTo}`
+  const signInUrl = `${import.meta.env.PUBLIC_WEBSITE_URL}/api/oauth-login?redirect_to=${redirectTo}`
 
   return (
     <div className="grid gap-1">
@@ -13,6 +13,7 @@ const GitHubSignIn = () => {
         <Textarea
           value=""
           onChange={() => {}}
+          onBlur={() => {}}
           isLoading
           placeholder="Sign in to comment"
           disabled

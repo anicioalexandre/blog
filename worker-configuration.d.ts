@@ -14,5 +14,4 @@ interface Env {
 	PUBLIC_GITHUB_OAUTH_API_URL: string;
 	PUBLIC_WEBSITE_DOMAIN: string;
 	PUBLIC_WEBSITE_URL: string;
-	PUBLIC_WORKER_URL: string;
 }

@@ -4,8 +4,8 @@ import {
   GITHUB_USER_LOGGED_IN,
   GITHUB_USER_REFRESH_TOKEN,
   GITHUB_USER_TOKEN,
-} from '../../../constants/cookie'
-import { deleteAstroSecureCookie } from '../../../utils/api'
+} from 'constants/cookie'
+import { deleteAstroSecureCookie } from 'utils/api'
 
 export const POST: APIRoute = async ({ cookies }) => {
   deleteAstroSecureCookie(cookies, GITHUB_USER_TOKEN)

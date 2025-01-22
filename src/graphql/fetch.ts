@@ -2,10 +2,9 @@ import { fetchGitHubUserApi } from 'pages/api/github-user-api'
 import { fetchGitHubUserRefresh } from 'pages/api/github-user-refresh'
 import { type GraphQLResponse, type RequestParameters, type Variables } from 'relay-runtime'
 
+import type { FetchOptions } from 'types/relay'
+import { isResponseInstance } from 'utils/api'
 import { triggerPossibleCookieChangeEvent } from 'utils/event'
-
-import type { FetchOptions } from '../../types/relay'
-import { isResponseInstance } from '../../utils/api'
 
 const fetchGitHubAsUser = async (request: RequestParameters, variables: Variables) => {
   let response = await fetchGitHubUserApi(request, variables)
@@ -42,7 +41,7 @@ const fetchGitHubAsApp = async (
   const headers = new Headers()
   headers.append('Content-Type', 'application/json')
 
-  const response = await fetch(`${import.meta.env.PUBLIC_WORKER_URL}/github-app-api`, {
+  const response = await fetch(`${import.meta.env.PUBLIC_WEBSITE_URL}/api/github-app-api`, {
     method: 'POST',
     headers,
     body: JSON.stringify({

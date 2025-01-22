@@ -20,12 +20,11 @@ id = "5a83e4ece44a410d8cf54f7e1b08f1fe"
 # Note: Use secrets to store sensitive data.
 # - https://developers.cloudflare.com/pages/functions/bindings/#secrets
 [vars]
-GITHUB_APP_REDIRECT_URI="https://worker.alexandreanicio.dev/oauth-callback"
+GITHUB_APP_REDIRECT_URI="https://alexandreanicio.dev/api/oauth-callback"
 PUBLIC_GITHUB_GRAPHQL_API_URL="https://api.github.com/graphql"
 PUBLIC_GITHUB_OAUTH_API_URL="https://github.com/login/oauth"
 PUBLIC_WEBSITE_DOMAIN=".alexandreanicio.dev"
 PUBLIC_WEBSITE_URL="https://alexandreanicio.dev"
-PUBLIC_WORKER_URL="https://alexandreanicio.dev/functions"
 
 
 # Automatically place your workloads in an optimal location to minimize latency.

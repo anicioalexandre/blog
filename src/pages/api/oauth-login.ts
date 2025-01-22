@@ -1,7 +1,7 @@
-import { verifyOrigin } from '../utils/api'
+import type { APIRoute } from 'astro'
 
-export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
-  verifyOrigin(request)
+export const GET: APIRoute = async ({ locals, request }) => {
+  const { env } = locals.runtime
 
   const clientId = env.GITHUB_APP_CLIENT_ID
   const redirectUri = env.GITHUB_APP_REDIRECT_URI

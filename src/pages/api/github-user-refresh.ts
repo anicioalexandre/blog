@@ -4,9 +4,9 @@ import {
   GITHUB_USER_LOGGED_IN,
   GITHUB_USER_REFRESH_TOKEN,
   GITHUB_USER_TOKEN,
-} from '../../../constants/cookie'
-import type { GitHubOauthErrorResponse, GitHubOauthSuccessResponse } from '../../../types/api'
-import { deleteAstroSecureCookie, setCookie, setSecureCookie } from '../../../utils/api'
+} from 'constants/cookie'
+import type { GitHubOauthErrorResponse, GitHubOauthSuccessResponse } from 'types/api'
+import { deleteAstroSecureCookie, setCookie, setSecureCookie } from 'utils/api'
 
 export const POST: APIRoute = async ({ cookies, locals }) => {
   const { env } = locals.runtime

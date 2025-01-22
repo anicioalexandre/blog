@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react'
 
 import Cookies from 'js-cookie'
 
+import { GITHUB_USER_LOGGED_IN } from 'constants/cookie'
 import { POSSIBLE_COOKIE_CHANGE_EVENT } from 'constants/event'
-
-import { GITHUB_USER_LOGGED_IN } from '../../../constants/cookie'
 
 const useGitHubUser = () => {
   const isLoggedInDefault = !!Cookies.get(GITHUB_USER_LOGGED_IN)

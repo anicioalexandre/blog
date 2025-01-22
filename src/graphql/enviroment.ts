@@ -10,7 +10,8 @@ import {
   type Variables,
 } from 'relay-runtime'
 
-import type { FetchOptions } from '../../types/relay'
+import type { FetchOptions } from 'types/relay'
+
 import { httpFetch } from './fetch'
 
 const CACHE_TTL = 5 * 1000
