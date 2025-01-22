@@ -9,10 +9,13 @@ export const formatDate = (date: Date) => {
   return new Intl.DateTimeFormat('en-US', options).format(dateInstance)
 }
 
-export const formatRelativeDate = (date: Date) => {
-  const now = new Date()
+export const formatRelativeDate = (date: Date | string) => {
   const dateInstance = new Date(date)
+  if (isNaN(dateInstance.getTime())) {
+    return 'Invalid Date'
+  }
 
+  const now = new Date()
   const diffMs = now.getTime() - dateInstance.getTime()
   if (diffMs < 0) return 'Invalid Date'
 
@@ -21,18 +24,18 @@ export const formatRelativeDate = (date: Date) => {
 
   if (dayDiff === 0) return 'today'
   if (dayDiff === 1) return 'yesterday'
-  if (dayDiff <= 6) return `${dayDiff} days ago`
+  if (dayDiff < 7) return `${dayDiff} days ago`
 
-  if (dayDiff <= 27) {
+  if (dayDiff < 30) {
     const weeks = Math.floor(dayDiff / 7)
     return `${weeks} week${weeks > 1 ? 's' : ''} ago`
   }
 
   const months = Math.floor(dayDiff / 30)
-  if (months <= 11) {
+  if (months < 12) {
     return `${months} month${months !== 1 ? 's' : ''} ago`
   }
 
-  const years = Math.floor(dayDiff / 365)
+  const years = Math.floor(months / 12)
   return `${years} year${years !== 1 ? 's' : ''} ago`
 }
