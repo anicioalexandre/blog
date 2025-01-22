@@ -3,9 +3,6 @@ name = "aa-blog"
 compatibility_date = "2024-12-30"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "./dist"
-routes = [
-  { pattern = "worker.alexandreanicio.dev", custom_domain = true }
-]
 
 # Bind a KV Namespace. Use KV as persistent storage for small key-value pairs.
 # Docs: https://developers.cloudflare.com/pages/functions/bindings/#kv-namespaces
@@ -28,7 +25,7 @@ PUBLIC_GITHUB_GRAPHQL_API_URL="https://api.github.com/graphql"
 PUBLIC_GITHUB_OAUTH_API_URL="https://github.com/login/oauth"
 PUBLIC_WEBSITE_DOMAIN=".alexandreanicio.dev"
 PUBLIC_WEBSITE_URL="https://alexandreanicio.dev"
-PUBLIC_WORKER_URL="https://worker.alexandreanicio.dev"
+PUBLIC_WORKER_URL="https://anicio.workers.dev"
 
 # Automatically place your workloads in an optimal location to minimize latency.
 # If you are running back-end logic in a Pages Function, running it closer to your back-end infrastructure
