@@ -19,7 +19,7 @@ const GitHubSignIn = () => {
           disabled
         />
         <div className="flex justify-end">
-          <Anchor href={signInUrl}>
+          <Anchor href={signInUrl} title='Sign in to comment'>
             <div className="grid grid-cols-[min-content,1fr] items-center gap-1">
               <GitHubIcon /> Sign in with GitHub
             </div>

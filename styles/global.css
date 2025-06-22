@@ -17,6 +17,26 @@
     @apply absolute bottom-0 left-[30px] top-0 block w-[2px] bg-surface-border content-[''] first:top-[12px];
   }
 
+  .index-tracker-timeline {
+    transition-property: color;
+    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transition-duration: 500ms;
+    @apply relative;
+  }
+
+  .index-tracker-timeline::before {
+    @apply absolute bottom-0 left-[0px] top-0 block w-[2px] bg-surface-border content-[''] first:top-[12px];
+    transition-property: background;
+    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transition-duration: 500ms;
+  }
+
+  .adjust-heading-scroll {
+    h3[id] {
+      @apply scroll-mt-[150px] md:scroll-mt-24;
+    }
+  }
+
   .markdown {
     @apply prose-body2 text-object-high;
     em {
@@ -28,7 +48,7 @@
     }
 
     pre {
-      @apply rounded bg-surface-border p-1;
+      @apply rounded bg-surface-border p-1 mt-0;
     }
 
     code {
@@ -36,3 +56,26 @@
     }
   }
 }
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    @apply w-2 h-5;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    @apply bg-surface-active rounded-3xl;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-surface-disabled border border-surface-border rounded-full;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-surface-disabled/50;
+  }
+
+  .emoji-font {
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+  }
+}
+

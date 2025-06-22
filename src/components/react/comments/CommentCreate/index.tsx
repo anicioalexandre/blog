@@ -117,5 +117,6 @@ const CommentCreate: FC<CommentCreateProps> = ({ discussionId }) => {
 }
 
 const CommentCreateWithGitHubAuth = withGitHubAuth(CommentCreate)
-
+// @ts-expect-error
+CommentCreateWithGitHubAuth.displayName = 'CommentCreate'
 export default CommentCreateWithGitHubAuth

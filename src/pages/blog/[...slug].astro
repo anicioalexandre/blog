@@ -2,9 +2,11 @@
 import { Image } from 'astro:assets'
 import { getCollection } from 'astro:content'
 
-import RootLayout from 'layouts/RootLayout.astro'
-import Tag from 'components/design-system/Tag/index.astro'
 import Comments from 'components/react/comments/Comments'
+import IndexTracker from 'components/astro/posts/IndexTracker/index.astro'
+import ReactionButton from 'components/react/reactions/ReactionButton'
+import RootLayout from 'layouts/RootLayout.astro'
+import Tag from 'components/astro/design-system/Tag/index.astro'
 import { formatDate } from 'utils/date'
 import { getPosts } from 'utils/blog'
 
@@ -23,33 +25,49 @@ const post = postToFind[0]
 export const prerender = true
 ---
 
-<RootLayout title={post.data.title} description={post.data.description} image={post.data.hero.src}>
-  <article class="grid w-full gap-4">
-    <header class="grid">
-      <h1 class="prose-h1">{post.data.title}</h1>
-      <div class="grid gap-2 md:grid-cols-[max-content_1fr] md:gap-4">
-        <p class="prose-body1 text-wrap text-object-low">
-          {formatDate(post.data.date)} - {post.data.minutesRead}
-        </p>
-        <div class="flex space-x-2">
-          {post.data.tags.map((tag) => <Tag>{tag}</Tag>)}
+<RootLayout
+  title={post.data.title}
+  description={post.data.description}
+  date={post.data.date}
+  image={post.data.hero.src}
+  class="grid grid-rows-[auto,1fr,auto]"
+>
+  <div class="relative grid gap-4 md:grid-cols-[210px,1fr]">
+    <IndexTracker post={post} />
+    <article class="adjust-heading-scroll grid w-full gap-4">
+      <header class="grid">
+        <h1 class="prose-h1">{post.data.title}</h1>
+        <div class="grid gap-2 md:grid-cols-[max-content_1fr] md:gap-4">
+          <p class="prose-body1 text-wrap text-object-low">
+            <!-- @ts-ignore TODO: fix types -->
+            {formatDate(post.data.date)} - {post.rendered?.metadata?.frontmatter?.minutesRead}
+          </p>
+          <div class="flex space-x-2">
+            {post.data.tags.map((tag) => <Tag>{tag}</Tag>)}
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
 
-    {
-      post.data.hero && (
-        <Image
-          src={post.data.hero}
-          alt={post.data.title}
-          format="webp"
-          class="aspect-[16/9] h-auto w-full max-w-4xl justify-self-center rounded-lg object-cover"
-          loading="eager"
-        />
-      )
-    }
+      {post.data.hero && (
+        <figure class="w-full max-w-4xl justify-self-center">
+          <Image
+            src={post.data.hero}
+            alt={post.data.heroAlt}
+            format="webp"
+            class="h-auto w-full rounded-lg object-cover"
+            loading="eager"
+          />
+          {post.data.heroCredit && (
+            <figcaption class="prose-caption mt-2 text-center text-object-low">
+              {post.data.heroCredit}
+            </figcaption>
+          )}
+        </figure>
+      )}
 
-    <section class="prose w-full max-w-none text-object-high" set:html={post.rendered?.html} />
-  </article>
+      <section class="prose w-full max-w-none text-object-high" set:html={post.rendered?.html} />
+    </article>
+  </div>
+  <ReactionButton discussionId={post.data.discussionId} client:only="react" />
   <Comments discussionId={post.data.discussionId} client:only="react" />
 </RootLayout>

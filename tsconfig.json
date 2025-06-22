@@ -1,5 +1,5 @@
 {
-  "extends": "astro/tsconfigs/strict",
+  "extends": "astro/tsconfigs/base",
   "compilerOptions": {
     "baseUrl": "./src",
     "verbatimModuleSyntax": true,
@@ -8,14 +8,15 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "types": [
-      "@cloudflare/workers-types/2023-07-01"
+      "@cloudflare/workers-types/2023-07-01",
+      "astro/client"
     ]
   },
-  "include": [
-    ".astro/types.d.ts",
-    "**/*"
+  "plugins": [
+    {
+      "name": "@astrojs/ts-plugin"
+    },
   ],
-  "exclude": [
-    "dist"
-  ]
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"]
 }

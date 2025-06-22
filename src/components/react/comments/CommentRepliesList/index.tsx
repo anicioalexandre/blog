@@ -9,11 +9,12 @@ import Button from 'components/react/desing-system/Button'
 
 import CommentsItem from '../CommentItem'
 import CommentReplyCreate from '../CommentReplyCreate'
+import { NUMBER_OF_REPLIES_TO_LOAD_MORE } from './constants'
 import type { CommentRepliesListProps } from './types'
 
 const CommentRepliesListFragmentQuery = graphql`
   fragment CommentRepliesListFragment on DiscussionComment
-  @argumentDefinitions(count: { type: "Int", defaultValue: 3 }, cursor: { type: "String" })
+  @argumentDefinitions(count: { type: "Int", defaultValue: 2 }, cursor: { type: "String" })
   @refetchable(queryName: "CommentRepliesListPaginationQuery") {
     id
     replies(first: $count, after: $cursor) @connection(key: "CommentRepliesListFragment__replies") {
@@ -51,7 +52,7 @@ const CommentRepliesList: FC<CommentRepliesListProps> = ({ discussionId, comment
             <Button
               size="small"
               variant="text"
-              onClick={() => loadNext(3)}
+              onClick={() => loadNext(NUMBER_OF_REPLIES_TO_LOAD_MORE)}
               disabled={isLoadingNext}
             >
               Load More Replies

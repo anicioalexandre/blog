@@ -1,0 +1,24 @@
+---
+import { getPosts } from 'utils/blog'
+
+import PostItem from '../PostItem/index.astro'
+
+let DEFAULT_POSTS_AMOUNT = 6
+
+const posts = await getPosts({ amount: DEFAULT_POSTS_AMOUNT })
+---
+
+<section class="grid gap-4">
+  <div class="flex items-center justify-start">
+    <h3 class="prose-h3 text-object-high">All Posts</h3>
+  </div>
+  <ul class="flex w-full flex-wrap justify-evenly md:justify-start">
+    {
+      posts.map((post) => (
+        <li class="m-4 max-h-fit w-full max-w-[300px] overflow-hidden">
+          <PostItem post={post} />
+        </li>
+      ))
+    }
+  </ul>
+</section>

@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets'
+
+import type { BlogPost } from 'types/blog'
+import { formatDate } from 'utils/date'
+
+interface Props {
+  post: BlogPost
+}
+const { post } = Astro.props
+---
+
+<a href={`blog/${post.id}`} class="max-h-[200px] max-w-[300px] transition-opacity hover:opacity-85">
+  <div class="grid gap-2">
+    <Image
+      src={post.data.hero}
+      alt={post.data.title}
+      width={300}
+      height={200}
+      format="webp"
+      class="max-h-[200px] max-w-[300px] rounded-lg object-cover"
+      loading="eager"
+    />
+    <div class="grid">
+      <p class="prose-body1 justify-self-stretch text-wrap text-object-low">
+        <!-- @ts-ignore TODO: fix types -->
+        {formatDate(post.data.date)} - {post.rendered?.metadata?.frontmatter?.minutesRead}
+      </p>
+      <h5 class="prose-h5 text-wrap text-object-high">{post.data.title}</h5>
+      <p class="prose-body1 text-wrap text-object-low">{post.data.description}</p>
+    </div>
+  </div>
+</a>

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "wrangler types && pnpm relay && astro dev",
     "build": "wrangler types && pnpm relay && astro build",
-    "lint": "echo TODO: add lint",
+    "lint": "tsc --noEmit",
     "clean": "rm -rf .astro .wrangler dist node_modules",
     "preview": "wrangler types && astro preview",
     "astro": "astro",
@@ -20,6 +20,7 @@
     "@astrojs/react": "^4.1.5",
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^5.1.4",
+    "@astrojs/ts-plugin": "^1.10.4",
     "@octokit/auth-app": "^7.1.4",
     "astro": "^5.1.7",
     "js-cookie": "^3.0.5",

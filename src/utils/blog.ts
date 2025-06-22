@@ -12,6 +12,8 @@ export const getBlogSchema = ({ image }: SchemaContext) =>
       .or(z.date())
       .transform((val) => new Date(val)),
     hero: image(),
+    heroCredit: z.string(),
+    heroAlt: z.string(),
     category: z.enum(BLOG_CATEGORIES).default('frontend'),
     tags: z.enum(BLOG_TAGS).array().default([]),
     draft: z.boolean().default(false),
