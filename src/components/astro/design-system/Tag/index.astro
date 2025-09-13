@@ -1,0 +1,16 @@
+---
+import { cls } from 'utils/string'
+
+interface Props extends astroHTML.JSX.AnchorHTMLAttributes {}
+const { class: customClass, ...props } = Astro.props
+---
+
+<span
+  class={cls(
+    'grid items-center justify-center prose-overline rounded bg-primary-high px-1 text-center text-object-high',
+    customClass ?? '',
+  )}
+  {...props}
+>
+  <slot />
+</span>

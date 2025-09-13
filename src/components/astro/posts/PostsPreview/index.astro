@@ -1,0 +1,31 @@
+---
+import Anchor from 'components/astro/design-system/Anchor/index.astro'
+import { getPosts } from 'utils/blog'
+
+import PostItem from '../PostItem/index.astro'
+
+const DEFAULT_POSTS_AMOUNT = 6
+
+interface Props {
+  initialAmount?: number
+}
+const { initialAmount = DEFAULT_POSTS_AMOUNT } = Astro.props
+
+const posts = await getPosts({ amount: initialAmount })
+---
+
+<section class="grid gap-4">
+  <div class="flex items-center justify-between">
+    <h3 class="prose-h3 text-object-high">Latest Posts</h3>
+    <Anchor href="/blog" class="text-primary-main">View all posts</Anchor>
+  </div>
+  <ul class="flex w-full flex-wrap justify-evenly md:justify-start">
+    {
+      posts.map((post) => (
+        <li class="m-4 max-h-fit w-full max-w-[300px] overflow-hidden">
+          <PostItem post={post} />
+        </li>
+      ))
+    }
+  </ul>
+</section>

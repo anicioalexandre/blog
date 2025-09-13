@@ -18,31 +18,16 @@ const CommentsQuery = graphql`
   }
 `
 
-/*
- *next steps:
- * deploy & resolve CF stuff
- * resolve TODOs
- * add linting
- * --------------------------------
- * look more at CF tools
- * list virtualization
- */
-
 const Comments: FC<CommentsProps> = ({ discussionId }) => {
   const data = Relay.useLazyLoadQuery<CommentsQuery>(CommentsQuery, {
-    discussionId: discussionId ?? '',
+    discussionId: discussionId,
   })
 
   if (!data.node || !discussionId) {
     return null
   }
 
-  return (
-    <section className="grid gap-4 py-3">
-      <h3 className="prose-h3">Comments</h3>
-      <CommentsList discussionId={discussionId} commentsRef={data.node} />
-    </section>
-  )
+  return <CommentsList discussionId={discussionId} commentsRef={data.node} />
 }
 
 const SuspendedComments: FC<CommentsProps> = ({ discussionId }) => (
@@ -52,5 +37,6 @@ const SuspendedComments: FC<CommentsProps> = ({ discussionId }) => (
 )
 
 const CommentsWithProviders = withProviders(SuspendedComments)
-
+// @ts-expect-error
+CommentsWithProviders.displayName = 'Comments'
 export default CommentsWithProviders

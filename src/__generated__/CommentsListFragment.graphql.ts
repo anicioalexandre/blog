@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7233c3361d92dad6411716f35c1271dd>>
+ * @generated SignedSource<<43df354692b7e7783df0cfc84ccc94e3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,7 @@ export type CommentsListFragment$data = {
       readonly endCursor: string | null | undefined;
       readonly hasNextPage: boolean;
     };
+    readonly totalCount: number;
   };
   readonly id: string;
   readonly " $fragmentType": "CommentsListFragment";
@@ -97,6 +98,13 @@ return {
       "name": "__CommentsListFragment__comments_connection",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -178,6 +186,6 @@ return {
 };
 })();
 
-(node as any).hash = "0d2c5735920bccb3e8f144c0a4639ad4";
+(node as any).hash = "dd0215611336299b83e10edfabe627fd";
 
 export default node;

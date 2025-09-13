@@ -1,0 +1,25 @@
+---
+import { Image } from 'astro:assets'
+
+interface Props {
+  src: ImageMetadata
+  alt: string
+  caption?: string
+}
+const { src, alt, caption } = Astro.props
+---
+
+<figure class="w-full max-w-4xl justify-self-center">
+  <Image
+    src={src}
+    alt={alt}
+    format="webp"
+    class="h-auto w-full rounded-lg object-cover"
+    loading="eager"
+  />
+  {
+    caption && (
+      <figcaption class="prose-caption mt-2 text-center text-object-low">{caption}</figcaption>
+    )
+  }
+</figure>

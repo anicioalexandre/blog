@@ -1,30 +1,32 @@
 ---
-import Footer from 'components/Footer/index.astro'
-import Head from 'components/meta/Head/index.astro'
-import Header from 'components/Header/index.astro'
+import Footer from 'components/astro/design-system/Footer/index.astro'
+import Head from 'components/astro/meta/Head/index.astro'
+import Header from 'components/astro/design-system/Header/index.astro'
 
 import '../../styles/fonts.css'
 import '../../styles/global.css'
+import { cls } from 'utils/string'
 
 interface Props {
   title: string
   description?: string
   image?: string
-  articleDate?: string
+  date?: Date
+  class?: string
 }
-const { title, description, image, articleDate } = Astro.props
+const { title, description, image, date, class: customClass = '' } = Astro.props
 ---
 
 <html lang="en" class="min-h-full scroll-smooth">
   <head>
-    <Head title={title} description={description} image={image} articleDate={articleDate} />
+    <Head title={title} description={description} image={image} date={date} />
   </head>
 
   <body
     class="ml-[calc(100vw-100%)] grid min-h-full grid-rows-[auto,1fr,auto] overflow-x-hidden bg-surface-background antialiased"
   >
     <Header />
-    <main class="h-full-minus-layout mx-auto w-full max-w-6xl p-4 md:p-6">
+    <main class={cls('h-full-minus-layout mx-auto w-full max-w-6xl p-4 md:p-6', customClass)}>
       <slot />
     </main>
     <Footer />

@@ -1,0 +1,1 @@
+export const NUMBER_OF_REPLIES_TO_LOAD_MORE = 3

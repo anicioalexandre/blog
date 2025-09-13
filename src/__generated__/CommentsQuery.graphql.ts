@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fa38e272be6f3d13e290b43f2c0a9c76>>
+ * @generated SignedSource<<18d6781acaa2e274f422c9a40b37046b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -111,7 +111,7 @@ v8 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 3
+    "value": 2
   }
 ],
 v9 = {
@@ -203,6 +203,13 @@ return {
                   {
                     "alias": null,
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "totalCount",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
                     "concreteType": "DiscussionCommentEdge",
                     "kind": "LinkedField",
                     "name": "edges",
@@ -258,7 +265,7 @@ return {
                               },
                               (v10/*: any*/)
                             ],
-                            "storageKey": "replies(first:3)"
+                            "storageKey": "replies(first:2)"
                           },
                           {
                             "alias": null,
@@ -300,12 +307,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f900ab5d29da166ac9624d74e4141982",
+    "cacheID": "e4195d1b90fa577909048b13567722a4",
     "id": null,
     "metadata": {},
     "name": "CommentsQuery",
     "operationKind": "query",
-    "text": "query CommentsQuery(\n  $discussionId: ID!\n) {\n  node(id: $discussionId) {\n    __typename\n    ...CommentsListFragment\n    id\n  }\n}\n\nfragment CommentItemFragment on DiscussionComment {\n  id\n  body\n  author {\n    __typename\n    login\n    avatarUrl\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  createdAt\n}\n\nfragment CommentRepliesListFragment on DiscussionComment {\n  id\n  replies(first: 3) {\n    edges {\n      node {\n        id\n        ...CommentItemFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CommentsListFragment on Discussion {\n  id\n  comments(first: 5) {\n    edges {\n      node {\n        id\n        ...CommentItemFragment\n        ...CommentRepliesListFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query CommentsQuery(\n  $discussionId: ID!\n) {\n  node(id: $discussionId) {\n    __typename\n    ...CommentsListFragment\n    id\n  }\n}\n\nfragment CommentItemFragment on DiscussionComment {\n  id\n  body\n  author {\n    __typename\n    login\n    avatarUrl\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  createdAt\n}\n\nfragment CommentRepliesListFragment on DiscussionComment {\n  id\n  replies(first: 2) {\n    edges {\n      node {\n        id\n        ...CommentItemFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CommentsListFragment on Discussion {\n  id\n  comments(first: 5) {\n    totalCount\n    edges {\n      node {\n        id\n        ...CommentItemFragment\n        ...CommentRepliesListFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

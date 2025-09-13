@@ -1,0 +1,35 @@
+---
+import type { ImageMetadata } from 'astro'
+
+interface Props {
+  src: string
+  thumbnail: string | ImageMetadata
+  caption?: string
+  autoplay?: boolean
+}
+const { src, thumbnail, caption, autoplay = false } = Astro.props
+
+// Handle both string URLs and imported images
+const thumbnailSrc = typeof thumbnail === 'string' ? thumbnail : thumbnail.src
+---
+
+<figure class="w-full max-w-4xl justify-self-center">
+  <video
+    controls
+    preload="metadata"
+    playsinline
+    poster={thumbnailSrc}
+    autoplay={autoplay}
+    muted={autoplay}
+    loop={autoplay}
+    class="h-auto w-full rounded-lg object-cover"
+  >
+    <source src={src} type="video/webm" />
+    <source src={src} type="video/mp4" /> Sorry, your browser doesn’t support embedded videos.
+  </video>
+  {
+    caption && (
+      <figcaption class="prose-caption mt-2 text-center text-object-low">{caption}</figcaption>
+    )
+  }
+</figure>

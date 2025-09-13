@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a50c50a169df4d9bc5714412a2d32884>>
+ * @generated SignedSource<<8e6c2fa9f34ba3af566580bd26d30c68>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,7 +28,7 @@ export type CommentRepliesListPaginationQuery = {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": 3,
+    "defaultValue": 2,
     "kind": "LocalArgument",
     "name": "count"
   },
@@ -267,16 +267,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a1bdbc8d89425ba2dc9589a98f313be9",
+    "cacheID": "b0259b4706ed1750d77c1b64e1930573",
     "id": null,
     "metadata": {},
     "name": "CommentRepliesListPaginationQuery",
     "operationKind": "query",
-    "text": "query CommentRepliesListPaginationQuery(\n  $count: Int = 3\n  $cursor: String\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...CommentRepliesListFragment_1G22uz\n    id\n  }\n}\n\nfragment CommentItemFragment on DiscussionComment {\n  id\n  body\n  author {\n    __typename\n    login\n    avatarUrl\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  createdAt\n}\n\nfragment CommentRepliesListFragment_1G22uz on DiscussionComment {\n  id\n  replies(first: $count, after: $cursor) {\n    edges {\n      node {\n        id\n        ...CommentItemFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query CommentRepliesListPaginationQuery(\n  $count: Int = 2\n  $cursor: String\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...CommentRepliesListFragment_1G22uz\n    id\n  }\n}\n\nfragment CommentItemFragment on DiscussionComment {\n  id\n  body\n  author {\n    __typename\n    login\n    avatarUrl\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  createdAt\n}\n\nfragment CommentRepliesListFragment_1G22uz on DiscussionComment {\n  id\n  replies(first: $count, after: $cursor) {\n    edges {\n      node {\n        id\n        ...CommentItemFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "89b6fd513b72f4eaa4340b246dea6671";
+(node as any).hash = "4ed36a3bfeec03610d4956645fcb8872";
 
 export default node;

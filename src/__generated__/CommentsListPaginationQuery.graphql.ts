@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7dd853b8f661e4ec51c8cf6054ec2670>>
+ * @generated SignedSource<<8eb706b91799aaf8a758f559bd327235>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -128,7 +128,7 @@ v8 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 3
+    "value": 2
   }
 ],
 v9 = {
@@ -231,6 +231,13 @@ return {
                   {
                     "alias": null,
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "totalCount",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
                     "concreteType": "DiscussionCommentEdge",
                     "kind": "LinkedField",
                     "name": "edges",
@@ -286,7 +293,7 @@ return {
                               },
                               (v10/*: any*/)
                             ],
-                            "storageKey": "replies(first:3)"
+                            "storageKey": "replies(first:2)"
                           },
                           {
                             "alias": null,
@@ -328,16 +335,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "96bf7079d2c22b0a755ac371cc02eedc",
+    "cacheID": "de02dc28bcc6a21fd5530e58d79bc3ec",
     "id": null,
     "metadata": {},
     "name": "CommentsListPaginationQuery",
     "operationKind": "query",
-    "text": "query CommentsListPaginationQuery(\n  $count: Int = 5\n  $cursor: String\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...CommentsListFragment_1G22uz\n    id\n  }\n}\n\nfragment CommentItemFragment on DiscussionComment {\n  id\n  body\n  author {\n    __typename\n    login\n    avatarUrl\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  createdAt\n}\n\nfragment CommentRepliesListFragment on DiscussionComment {\n  id\n  replies(first: 3) {\n    edges {\n      node {\n        id\n        ...CommentItemFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CommentsListFragment_1G22uz on Discussion {\n  id\n  comments(first: $count, after: $cursor) {\n    edges {\n      node {\n        id\n        ...CommentItemFragment\n        ...CommentRepliesListFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query CommentsListPaginationQuery(\n  $count: Int = 5\n  $cursor: String\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...CommentsListFragment_1G22uz\n    id\n  }\n}\n\nfragment CommentItemFragment on DiscussionComment {\n  id\n  body\n  author {\n    __typename\n    login\n    avatarUrl\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  createdAt\n}\n\nfragment CommentRepliesListFragment on DiscussionComment {\n  id\n  replies(first: 2) {\n    edges {\n      node {\n        id\n        ...CommentItemFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CommentsListFragment_1G22uz on Discussion {\n  id\n  comments(first: $count, after: $cursor) {\n    totalCount\n    edges {\n      node {\n        id\n        ...CommentItemFragment\n        ...CommentRepliesListFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "0d2c5735920bccb3e8f144c0a4639ad4";
+(node as any).hash = "dd0215611336299b83e10edfabe627fd";
 
 export default node;
