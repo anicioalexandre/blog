@@ -1,0 +1,37 @@
+---
+import { cls } from 'utils/string'
+
+interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
+  isMdx: boolean
+}
+const { class: customClass = '', rel: customRel, isMdx, ...props } = Astro.props
+
+const isExternalLink = (href: astroHTML.JSX.AnchorHTMLAttributes['href']) => {
+  try {
+    if (!href) return false
+    const link = new URL(href)
+    return link.origin !== Astro.url.origin
+  } catch {
+    return false
+  }
+}
+
+const externalLink = isExternalLink(props.href)
+const rel = externalLink ? 'noopener noreferrer' : undefined
+const target = externalLink ? '_blank' : undefined
+
+const textColor = isMdx ? 'text-primary-high hover:opacity-80' : 'hover:text-primary-high'
+---
+
+<a
+  class={cls(
+    'underline-offset-2 inline-block hover:underline prose-button',
+    textColor,
+    customClass ?? '',
+  )}
+  rel={cls(rel ?? '', customRel ?? '')}
+  target={target}
+  {...props}
+>
+  <slot />
+</a>

@@ -113,10 +113,16 @@ export default {
               color: object.high,
             },
             code: {
-              color: primary.darker,
-              backgroundColor: grey[200],
-              padding: '0.25rem 0.5rem',
+              color: object.high,
+              backgroundColor: primary.darker,
+              padding: '0.15rem 0.25rem',
               borderRadius: '0.25rem',
+              '&::before': {
+                content: 'none !important',
+              },
+              '&::after': {
+                content: 'none !important',
+              },
             },
           },
         },

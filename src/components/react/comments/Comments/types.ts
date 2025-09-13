@@ -1,3 +1,3 @@
 export interface CommentsProps {
-  discussionId?: string
+  discussionId: string
 }

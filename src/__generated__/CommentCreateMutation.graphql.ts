@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<67e0fcf243f99e244c7a147f748048fa>>
+ * @generated SignedSource<<e1f53e02625ee9e2b3cccbf50b7d2d72>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -116,7 +116,7 @@ v8 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 3
+    "value": 2
   }
 ];
 return {
@@ -262,7 +262,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "replies(first:3)"
+                "storageKey": "replies(first:2)"
               },
               {
                 "alias": null,
@@ -303,12 +303,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c18bb15929cdb6c157643cee14479afa",
+    "cacheID": "4490e832f741ab58d199587fd98c5383",
     "id": null,
     "metadata": {},
     "name": "CommentCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation CommentCreateMutation(\n  $input: AddDiscussionCommentInput!\n) {\n  addDiscussionComment(input: $input) {\n    comment {\n      ...CommentItemFragment\n      ...CommentRepliesListFragment\n      id\n    }\n  }\n}\n\nfragment CommentItemFragment on DiscussionComment {\n  id\n  body\n  author {\n    __typename\n    login\n    avatarUrl\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  createdAt\n}\n\nfragment CommentRepliesListFragment on DiscussionComment {\n  id\n  replies(first: 3) {\n    edges {\n      node {\n        id\n        ...CommentItemFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "mutation CommentCreateMutation(\n  $input: AddDiscussionCommentInput!\n) {\n  addDiscussionComment(input: $input) {\n    comment {\n      ...CommentItemFragment\n      ...CommentRepliesListFragment\n      id\n    }\n  }\n}\n\nfragment CommentItemFragment on DiscussionComment {\n  id\n  body\n  author {\n    __typename\n    login\n    avatarUrl\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  createdAt\n}\n\nfragment CommentRepliesListFragment on DiscussionComment {\n  id\n  replies(first: 2) {\n    edges {\n      node {\n        id\n        ...CommentItemFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

@@ -20,7 +20,14 @@ export default defineConfig({
     },
   },
 
-  integrations: [mdx(), sitemap(), tailwind(), react()],
+  integrations: [
+    mdx({
+      remarkPlugins: [remarkReadingTime],
+    }),
+    sitemap(),
+    tailwind(),
+    react(),
+  ],
 
   vite: {
     ssr: {

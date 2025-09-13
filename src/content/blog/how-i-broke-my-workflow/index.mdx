@@ -1,0 +1,90 @@
+---
+title: 'Switching keyboards, learning Vim, leaving VS Code: How I broke my workflow'
+description: 'What happened when I left VS Code, learned Vim, and switched to a split keyboard.'
+discussionId: 'D_kwDONkIwbs4Ah6pS'
+date: 2025-09-15 12:00:00 UTC
+hero: ./hero.jpg
+heroCredit: "Image generated using Google FX AI, based on Hokusai's 'The Great Wave off Kanagawa'."
+heroAlt: "An AI-generated artwork inspired by Hokusai's 'The Great Wave off Kanagawa."
+tags:
+  - hardware
+  - vim
+  - vscode
+  - zed
+---
+
+import Anchor from 'components/astro/design-system/Anchor/index.astro'
+import ImageWithCaption from 'components/astro/design-system/ImageWithCaption/index.astro'
+import VideoWithThumbnail from 'components/astro/design-system/VideoWithThumbnail/index.astro'
+import MySplitKeyboardImage from './my-split-keyboard.jpg'
+import ZedMultibufferThumbnail from './zed-multibuffers.jpg'
+import ZedMultibufferVideo from './zed-multibuffers.mp4'
+
+The past three months have been pretty interesting in some aspects of my professional life.
+
+I decided to make what I can now confidently call a pretty drastic switch to my keyboard layout. Along with that, I also dove into learning Vim (Neovim), aiming for a more "keyboard-driven" workflow. And in the middle of these transitions, I found myself switching code editors for the first time from VS Code to Zed.
+
+Let’s talk a little bit about my experience with these changes and how I’m feeling about them today.
+
+### Switching to a split keyboard
+
+Before the switch, I had a full-size keyboard with the numpad and everything. I loved it. Having the numpad was a must for me because I was so used to typing numbers with it that I hadn’t even considered any other keyboard layout at the time.
+
+Because my keyboard was so long, over time I started to notice that my right arm had to make a big movement from the mouse to the keyboard whenever I wanted to type something. Working 8 hours a day, most of that time typing, it wasn’t getting any better. At some point, I started to feel some pain in my back, and I needed a setup more ergonomic.
+
+A split keyboard was an natural choice so I could try to minimize my right hand movement from the mouse to the keyboard. There are so many combinations you can do with these keyboards, I was feeling kind of lost at first! So I got a very basic build (Sofle v2 case, no wireless).
+
+It arrived on a Monday, so I had a chance to try it at work.
+
+<ImageWithCaption src={MySplitKeyboardImage} alt="My slipt keyboard" caption="My split keyboard" />
+
+It felt terrible.
+
+The feeling of not being able to type simple words in a reasonable time is pretty frustrating. Not only do you have to rebuild your muscle memory because of the new key placement, but the keyboard also has way fewer keys (58 to be exact)! It felt like I was re-learning how to type from scratch. Configuring and getting used to multiple keyboard layers was tricky, and it took me some time to fit in all the symbols and characters I use regularly.
+
+I kept going, and after ~two weeks, typing started to feel more fluid. Those little, tiny words started coming faster, and suddenly, remembering how to open curly braces wasn’t that painful! Now, three months after, I can say it feels more natural. Although I still find myself needing to tweak some configs here and there, and get used to them again.
+
+### Diving into Vim
+
+Since the beginning of my programming career, I have always used Vim as my default text editor on the terminal, but my knowledge of it never went further than inserting text, saving, and closing. Since Vim style fits perfectly in my quest for a keyboard-driven workflow, it was time to learn it properly.
+
+Trying to get a grasp on the Vim motions was hard. The philosophy behind Vim and the motions felt like the opposite of what I’d been doing my entire life. Using the mouse to cherry-pick and change a word is so much easier! Why would I do it differently? That initial barrier of having to relearn something you’ve done one way for years was really tough to get through. And still is nowadays.
+
+I started practicing in my spare time and on personal projects (this blog was one of them!), but it just felt like I wasn't progressing fast enough. When the split keyboard arrived, I gave it a shot to use Vim at work so I could finally break that barrier. It felt like a combo of unproductivity: a keyboard I didn't know how to type on and motions I didn't know how to use!
+
+Using Vim at work was key to shortening my learning curve. I could see common scenarios that happen in my day-to-day and learn which motions or commands I could use to make things more pratical. Although it took me way more time, it was very fun to learn and figure out new ways to edit text, challenging myself to think about how I could do that faster and without using my mouse. I was finally seeing how powerful Vim could be and, at the same time, realizing I wasn't using it to its full potential.
+
+### Replacing VS Code with Zed
+
+Back in 2018, when I first started learning to program, VS Code was my editor of choice and I stick with it all the way to 2025. When I began diving into Vim, my first attempt was to code directly in the terminal using the <Anchor href="https://github.com/nvim-lua/kickstart.nvim" isMdx>kickstart.nvim</Anchor> setup. One of the great things about Neovim is that you can configure it in almost infinite ways, making your environment truly your own. But since I was already in the middle of two big transitions (full-size **->** split keyboard **&** regular **->** vim text editing), I decided not to complicate my life further by also switching code editors right away.
+
+Instead, I looked for a way to bring Vim into VS Code. My first stop was the <Anchor href="https://github.com/vscode-neovim/vscode-neovim" isMdx>VSCode Neovim</Anchor> extension, which fully embeds Neovim into VS Code’s native interface. It is a powerful tool that lets your Neovim Lua configs work right inside VS Code, making the whole experience feel surprisingly natural. With it, I could practice Vim at work while still enjoying VS Code’s familiar features.
+
+Unfortunately, after a few weeks, I ran into a frustrating <Anchor href="https://github.com/vscode-neovim/vscode-neovim/issues/2184" isMdx>issue</Anchor> that happened mostly when working with `.ipynb` notebooks or with any AI assistant like Copilot enabled. It turned out to be a <Anchor href="https://github.com/neovim/neovim/issues/31316" isMdx>Neovim's bug</Anchor> (that already got solved, btw!) that caused periodic freezes, enough to make using the extension a test of patience. Since there were no better alternatives, I finally had to consider switching editors.
+
+I wanted something that worked with Vim (ideally natively), had most of VS Code’s core features like Git integration and smooth file navigation, and preferably fast. I don't even remember exactly how I came across Zed, maybe in a random video on YouTube, but I decided to try it. It turned out to have everything I was looking for:
+
+<ul>
+  <li>
+    <Anchor href="https://zed.dev/docs/vim" isMdx>Vim mode</Anchor> (as a disclaimer, Zed's vim mode does not try to replicate Vim one-to-one, but it does provide a very fluid and configurable experience)
+  </li>
+  <li>
+    <Anchor href="https://zed.dev/docs/git" isMdx>Native git integration</Anchor> and a clean UI to navigate files and more
+  </li>
+  <li>Very fast, relatively close to Neovim's terminal performance</li>
+</ul>
+
+I could go on about other features Zed offers, like built-in LSP support and linting for several languages, the native debugger, or even the agentic mode, which looks really promising. Speaking of that, it was actually my first time trying agentic editing inside a code editor. When I left VS Code, they hadn’t released a final version yet, so I was pretty impressed by how powerful it felt. It’s great at collecting context from your code, thinking and editing across multiple files in the codebase.
+
+But the feature I enjoyed the most was definitely <Anchor href="https://zed.dev/docs/multibuffers" isMdx>multibuffers</Anchor>.
+
+<VideoWithThumbnail
+  src={ZedMultibufferVideo}
+  thumbnail={ZedMultibufferThumbnail}
+  caption="Zed multibuffers in action"
+  autoplay
+/>
+
+You won’t find this in many editors, and it really feels like one of Zed’s superpowers. It makes refactors, code reviews, and even using agentic mode much more efficient, because you can see and work with code from multiple files in a single thread.
+
+That’s it for this post! Whether you’ve gone through a big workflow change like switching editors or keyboards, gone down the Vim rabbit hole, or even if your setup looks nothing like mine, drop a comment and share your thoughts!

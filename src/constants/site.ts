@@ -1,7 +1,7 @@
 export const config = {
   site: 'https://alexandreanicio.com/',
   author: 'Alexandre Anício',
-  title: 'alexandre anício website',
+  title: 'aa dev',
   description: 'A website about software development and other tech-related topics.',
   lang: 'en-US',
   ogLocale: 'en_US',

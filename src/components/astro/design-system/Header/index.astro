@@ -1,0 +1,181 @@
+---
+import { GITHUB_PROFILE, LINKEDIN_PROFILE } from 'constants/links'
+
+import Anchor from '../Anchor/index.astro'
+import { Image } from 'astro:assets'
+---
+
+<header
+  class="not-scrolling-header pointer-events-none sticky left-0 top-0 z-20 flex w-full justify-center"
+>
+  <div
+    id="header-container"
+    class="pointer-events-auto flex w-full max-w-6xl flex-[0] items-center justify-center gap-3 px-4 py-2 md:flex-1 md:justify-between md:p-3"
+  >
+    <h1
+      class="prose-h3 flex justify-center text-center text-object-high md:prose-h2 md:justify-start md:text-start"
+    >
+      <a href="/" class="text-inherit no-underline">aa dev</a>
+    </h1>
+    <nav class="w-fit">
+      <ul class="flex justify-center space-x-2">
+        <li class="animation flex items-center gap-1">
+          <Anchor href="/blog" class="nav-icon">
+            <Image src="/images/blog-icon.svg" alt="Logo" width={32} height={32} class="nav-icon" />
+          </Anchor>
+          <Anchor href="/blog" class="nav-text">Blog</Anchor>
+        </li>
+        <li class="animation flex items-center gap-1">
+          <Anchor href={GITHUB_PROFILE} class="nav-icon">
+            <Image
+              src="/images/github-icon.svg"
+              alt="Logo"
+              width={32}
+              height={32}
+              class="nav-icon"
+            />
+          </Anchor>
+          <Anchor href={GITHUB_PROFILE} class="nav-text">GitHub</Anchor>
+        </li>
+        <li class="animation flex items-center gap-1">
+          <Anchor href={LINKEDIN_PROFILE} class="nav-icon">
+            <Image
+              src="/images/linkedin-icon.svg"
+              alt="Logo"
+              width={32}
+              height={32}
+              class="nav-icon"
+            />
+          </Anchor>
+          <Anchor href={LINKEDIN_PROFILE} class="nav-text">LinkedIn</Anchor>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div id="scroll-trigger"></div>
+
+<style>
+  @keyframes flash-in {
+    0% {
+      transform: scale(1);
+      border-radius: 9999px;
+      border-width: 1px;
+      border-style: solid;
+      border-color: transparent;
+    }
+    30% {
+      transform: scale(0.65);
+    }
+    60% {
+      transform: scale(0.85);
+    }
+    100% {
+      transform: scale(1);
+      border-radius: 9999px;
+      border-width: 1px;
+      border-style: solid;
+      border-color: var(--surface-border);
+      background-color: rgb(var(--surface-background) / 0.7);
+      backdrop-filter: blur(16px);
+    }
+  }
+
+  @keyframes flash-out {
+    0% {
+      transform: scale(0);
+      border-radius: 9999px;
+      border-width: 1px;
+      border-style: solid;
+      border-color: var(--surface-border);
+      background-color: rgb(var(--surface-background) / 0.7);
+      backdrop-filter: blur(16px);
+    }
+    30% {
+      transform: scale(0.6);
+    }
+    60% {
+      transform: scale(0.88);
+    }
+    100% {
+      transform: scale(1);
+      border-radius: 9999px;
+      border-width: 1px;
+      border-style: solid;
+      border-color: transparent;
+    }
+  }
+
+  a.nav-text {
+    @apply hidden md:block;
+  }
+  header.scrolling-header a.nav-text {
+    @apply hidden;
+  }
+
+  a.nav-icon {
+    @apply block w-8;
+  }
+  header.scrolling-header a.nav-icon {
+    @apply block;
+  }
+
+  header:not(.not-scrolling-header) li.animation {
+    @apply animate-none md:animate-[flash-out_0.5s_cubic-bezier(0.4,0,0.2,1)];
+  }
+  header.scrolling-header li.animation {
+    @apply animate-[flash-int_0.5s_cubic-bezier(0.4,0,0.2,1)] md:animate-none;
+  }
+
+  header li {
+    @apply rounded-full border border-solid border-transparent;
+    transition: all 0.3s ease-in-out;
+  }
+  header.scrolling-header li {
+    @apply rounded-full border border-solid border-surface-border bg-surface-background/70 backdrop-blur-lg;
+    transition: all 0.3s ease-in-out;
+  }
+
+  div#header-container {
+    transition: flex 0.5s ease-in-out;
+  }
+  header.scrolling-header div#header-container {
+    @apply flex-[0];
+    transition: flex 0.5s ease-in-out;
+  }
+
+  header h1 a {
+    @apply flex h-[60px] w-[134px] items-center justify-center rounded-full border border-solid border-transparent;
+    transition: all 0.3s ease-in-out;
+  }
+  header.scrolling-header h1 a {
+    @apply rounded-full border border-solid border-surface-border bg-surface-background/70 backdrop-blur-lg;
+    transition: all 0.3s ease-in-out;
+  }
+</style>
+
+<script>
+  const transitionBoundary = 30
+
+  const onScroll = () => {
+    const headerElement = document.querySelector('header')
+    const scrollTriggerElement = document.querySelector('#scroll-trigger')
+    let scrollingHeader = false
+    const rect = scrollTriggerElement!.getBoundingClientRect()
+    if (rect.top <= transitionBoundary) {
+      scrollingHeader = true
+    }
+    if (scrollingHeader) {
+      headerElement!.classList.add('scrolling-header')
+      headerElement!.classList.remove('not-scrolling-header')
+    } else {
+      headerElement!.classList.remove('scrolling-header')
+    }
+    if (rect.top === 84) {
+      headerElement!.classList.remove('scrolling-header')
+      headerElement!.classList.add('not-scrolling-header')
+    }
+  }
+
+  window.addEventListener('scroll', onScroll)
+</script>

@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets'
-import PostsPreview from 'components/posts/PostsPreview/index.astro'
+import PostsPreview from 'components/astro/posts/PostsPreview/index.astro'
 import RootLayout from 'layouts/RootLayout.astro'
 ---
 
@@ -16,20 +16,17 @@ import RootLayout from 'layouts/RootLayout.astro'
         loading="eager"
       />
       <div class="grid auto-rows-min gap-4">
-        <!-- 🤘🏽 😄 👋🏽 -->
         <h1 class="prose-h1">Hi there, I'm Alexandre!</h1>
         <p class="prose-body1">
-          I'm a curious engineer who loves exploring new technologies and hands-on learning. I
-          specialize in frontend development with React (and other frameworks), work on mobile apps
-          with React Native, and explore backend systems with Python (Django) and DevOps tools like
-          Docker and Kubernetes.
+          I'm an engineer driven by curiosity, passionate about exploring new technologies, hands-on
+          learning, and tackling challenges across frontend, backend, cloud computing, and
+          infrastructure automation.
         </p>
         <p class="prose-body1">
-          This blog serves as both a space for sharing my professional journey and a hub for
-          technical insights. Here, you'll find posts about tools and technologies I've explored,
-          practical guides, and stories about how I approach challenges in software development.
+          This blog is a space to share insights from my professional journey, practical guides, and
+          stories about how I approach challenges in software development.
         </p>
-        <p class="prose-h6">Thanks for stopping by—enjoy your stay!</p>
+        <p class="prose-h6">Thanks for stopping by, enjoy your stay!</p>
       </div>
     </section>
     <PostsPreview />

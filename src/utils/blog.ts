@@ -1,6 +1,6 @@
-import { type SchemaContext, getCollection, z } from 'astro:content'
+import { type SchemaContext, getCollection, render, z } from 'astro:content'
 
-import { BLOG_CATEGORIES, BLOG_TAGS } from 'constants/blog'
+import { BLOG_TAGS } from 'constants/blog'
 
 export const getBlogSchema = ({ image }: SchemaContext) =>
   z.object({
@@ -12,17 +12,34 @@ export const getBlogSchema = ({ image }: SchemaContext) =>
       .or(z.date())
       .transform((val) => new Date(val)),
     hero: image(),
-    category: z.enum(BLOG_CATEGORIES).default('frontend'),
+    heroCredit: z.string(),
+    heroAlt: z.string(),
     tags: z.enum(BLOG_TAGS).array().default([]),
     draft: z.boolean().default(false),
+    minutesRead: z.string().optional(),
   })
 
 type GetPostOptions = {
   amount?: number | undefined
 }
 export const getPosts = async ({ amount }: GetPostOptions = {}) => {
-  return (await getCollection('blog'))
+  const posts = (await getCollection('blog'))
     .filter((post) => !post.data.draft)
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
     .slice(0, amount)
+
+  const postsWithReadingTime = await Promise.all(
+    posts.map(async (post) => {
+      const { remarkPluginFrontmatter } = await render(post)
+      return {
+        ...post,
+        data: {
+          ...post.data,
+          minutesRead: remarkPluginFrontmatter?.minutesRead || undefined,
+        },
+      }
+    }),
+  )
+
+  return postsWithReadingTime
 }
