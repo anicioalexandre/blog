@@ -8,6 +8,7 @@ const Anchor: FC<AnchorProps> = ({
   variant = 'contained',
   size = 'medium',
   rel: customRel,
+  className,
   ...props
 }) => {
   const sizeStyles = {
@@ -26,6 +27,7 @@ const Anchor: FC<AnchorProps> = ({
   return (
     <a
       className={cls(
+        className ?? '',
         sizeStyles[size],
         variantStyles[variant],
         'prose-button grid items-center justify-center gap-1 text-center active:hover:opacity-80 disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:text-object-low',

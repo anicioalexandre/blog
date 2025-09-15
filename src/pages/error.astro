@@ -1,0 +1,22 @@
+---
+import Anchor from 'components/react/desing-system/Anchor'
+import RootLayout from 'layouts/RootLayout.astro'
+import type { ErrorCode } from 'types/error'
+import { ERROR_CODE } from 'constants/error'
+
+const url = new URL(Astro.request.url)
+const code = (url.searchParams.get('code') ?? 'default') as ErrorCode
+const error = ERROR_CODE[code]
+---
+
+<RootLayout title="Error">
+  <div class="flex h-full w-full items-start justify-center md:pt-20">
+    <div class="grid justify-items-center gap-8 rounded-lg bg-surface-active p-8">
+      <div class="grid gap-2">
+        <h1 class="prose-h2 text-object-high">Oops! Something went wrong</h1>
+        <p class="prose-p text-object-low">{error.message}</p>
+      </div>
+      <Anchor href={error.redirectUrl} className="w-fit">{error.redirectLabel}</Anchor>
+    </div>
+  </div>
+</RootLayout>

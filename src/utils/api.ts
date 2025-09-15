@@ -1,4 +1,5 @@
 import type { AstroCookies } from 'astro'
+import type { ErrorCode } from 'types/error'
 
 type SetCookieParams = {
   headers: Headers
@@ -60,3 +61,20 @@ export const parseCookies = (request: Request) => {
 
 export const isResponseInstance = (response: any): response is Response =>
   response instanceof Response
+
+type CreateErrorRedirectParams = {
+  errorCode: ErrorCode
+  baseUrl?: string
+  headers?: Headers
+}
+export const createErrorRedirect = ({
+  errorCode,
+  baseUrl = '',
+  headers = new Headers(),
+}: CreateErrorRedirectParams): Response => {
+  const errorUrl = new URL('/error', baseUrl || 'http://localhost')
+  errorUrl.searchParams.set('code', errorCode)
+
+  headers.set('Location', errorUrl.toString())
+  return new Response(null, { status: 302, headers })
+}
