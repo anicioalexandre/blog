@@ -6,7 +6,7 @@ import { ERROR_CODE } from 'constants/error'
 
 const url = new URL(Astro.request.url)
 const code = (url.searchParams.get('code') ?? 'default') as ErrorCode
-const error = ERROR_CODE[code]
+const error = ERROR_CODE[code] || ERROR_CODE.default
 ---
 
 <RootLayout title="Error">

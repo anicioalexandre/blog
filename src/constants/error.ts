@@ -15,7 +15,7 @@ export const ERROR_CODE = {
     redirectUrl: '/blog',
   },
   default: {
-    message: 'An unexpected error occurred',
+    message: 'An unexpected error occurred.',
     redirectLabel: 'Go To Home',
     redirectUrl: '/',
   },
