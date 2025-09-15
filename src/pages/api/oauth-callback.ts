@@ -6,10 +6,11 @@ import {
   GITHUB_USER_TOKEN,
 } from 'constants/cookie'
 import type { GitHubOauthSuccessResponse } from 'types/api'
-import { deleteSecureCookie, setCookie, setSecureCookie } from 'utils/api'
+import { deleteSecureCookie, setCookie, setSecureCookie, createErrorRedirect } from 'utils/api'
 
 export const GET: APIRoute = async ({ locals, request }) => {
   const { env } = locals.runtime
+  const baseUrl = env.PUBLIC_WEBSITE_URL
 
   const url = new URL(request.url)
   const code = url.searchParams.get('code') ?? ''
@@ -19,13 +20,19 @@ export const GET: APIRoute = async ({ locals, request }) => {
   try {
     state = JSON.parse(decodeURIComponent(stateParam))
   } catch (e) {
-    return new Response('Invalid state parameter', { status: 400 })
+    return createErrorRedirect({
+      errorCode: '001',
+      baseUrl,
+    })
   }
   const { csrfToken, redirectTo } = state
 
   const tokenInStore = await env.CSRF_TOKENS.get(csrfToken)
   if (!tokenInStore || tokenInStore !== 'valid') {
-    return new Response('Invalid or expired CSRF token', { status: 403 })
+    return createErrorRedirect({
+      errorCode: '002',
+      baseUrl,
+    })
   }
 
   await env.CSRF_TOKENS.delete(csrfToken)
@@ -46,8 +53,9 @@ export const GET: APIRoute = async ({ locals, request }) => {
     const headers = new Headers()
     deleteSecureCookie({ headers, key: GITHUB_USER_TOKEN })
     deleteSecureCookie({ headers, key: GITHUB_USER_LOGGED_IN })
-    return new Response(`GitHub OAuth error: ${response.statusText}`, {
-      status: response.status,
+    return createErrorRedirect({
+      errorCode: '003',
+      baseUrl,
       headers,
     })
   }
@@ -60,7 +68,7 @@ export const GET: APIRoute = async ({ locals, request }) => {
   setSecureCookie({ headers, key: GITHUB_USER_REFRESH_TOKEN, value: userRefreshToken })
   setCookie({ headers, key: GITHUB_USER_LOGGED_IN, value: '1' })
 
-  const redirectUrl = `${env.PUBLIC_WEBSITE_URL}${redirectTo ?? '/'}`
+  const redirectUrl = `${baseUrl}${redirectTo ?? '/'}`
   headers.set('Location', redirectUrl || '/')
   return new Response(null, { status: 302, headers })
 }

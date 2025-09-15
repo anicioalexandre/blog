@@ -6,7 +6,7 @@
 
 @layer base {
   .h-full-minus-layout {
-    @apply min-h-[calc(100vh-76px-73px)] md:min-h-[calc(100vh-84px-97px)];
+    @apply min-h-[calc(100vh-76px-97px)] md:min-h-[calc(100vh-84px-97px)];
   }
 
   .reply-timeline {
