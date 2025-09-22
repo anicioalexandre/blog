@@ -35,7 +35,6 @@
     "relay-runtime": "^18.2.0",
     "remark-gfm": "^4.0.0",
     "tailwindcss": "^3.4.17",
-    "wrangler": "^4.24.3",
     "zod": "^3.24.1"
   },
   "devDependencies": {
@@ -62,7 +61,8 @@
     "prettier-plugin-tailwindcss": "^0.6.10",
     "relay-compiler": "^20.0.0",
     "sharp": "^0.33.5",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "wrangler": "^4.36.0"
   },
   "engines": {
     "node": ">=22.0.0"
