@@ -25,9 +25,6 @@ const postToFind = await getCollection('blog', (entry) => entry.id === Astro.par
 const post = postToFind[0] as BlogPost
 
 const { Content, remarkPluginFrontmatter } = await render(post)
-
-const heroImagePath = post.data.hero.src.replace(/^.*\/public/, '').split('?')[0]
-
 export const prerender = true
 ---
 
@@ -35,7 +32,7 @@ export const prerender = true
   title={post.data.title}
   description={post.data.description}
   date={post.data.date}
-  image={heroImagePath}
+  image={post.data.heroPublicUrl}
   class="grid grid-rows-[auto,1fr,auto]"
 >
   <div class="relative grid gap-4 md:grid-cols-[210px,1fr]">
