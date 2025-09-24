@@ -14,8 +14,11 @@ const { src, alt, caption } = Astro.props
     src={src}
     alt={alt}
     format="webp"
+    quality={80}
+    widths={[400, 800, 1200, 1600]}
+    sizes="(max-width: 400px) 400px, (max-width: 800px) 800px, (max-width: 1200px) 1200px, 1600px"
     class="h-auto w-full rounded-lg object-cover"
-    loading="eager"
+    loading="lazy"
   />
   {
     caption && (

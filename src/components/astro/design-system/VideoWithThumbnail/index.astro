@@ -16,7 +16,7 @@ const thumbnailSrc = typeof thumbnail === 'string' ? thumbnail : thumbnail.src
 <figure class="w-full max-w-4xl justify-self-center">
   <video
     controls
-    preload="metadata"
+    preload="none"
     playsinline
     poster={thumbnailSrc}
     autoplay={autoplay}
@@ -24,8 +24,8 @@ const thumbnailSrc = typeof thumbnail === 'string' ? thumbnail : thumbnail.src
     loop={autoplay}
     class="h-auto w-full rounded-lg object-cover"
   >
-    <source src={src} type="video/webm" />
-    <source src={src} type="video/mp4" /> Sorry, your browser doesn’t support embedded videos.
+    <source src={src} type="video/mp4" />
+    Sorry, your browser doesn't support embedded videos.
   </video>
   {
     caption && (

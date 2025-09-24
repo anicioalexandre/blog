@@ -19,6 +19,9 @@ const { post } = Astro.props
       width={300}
       height={200}
       format="webp"
+      quality={100}
+      widths={[150, 300, 450]}
+      sizes="(max-width: 640px) 150px, (max-width: 768px) 300px, 450px"
       class="max-h-[200px] max-w-[300px] rounded-lg object-cover"
       loading="eager"
     />
