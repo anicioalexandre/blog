@@ -1,5 +1,5 @@
 export const config = {
-  site: 'https://alexandreanicio.com/',
+  site: 'https://alexandreanicio.dev/',
   author: 'Alexandre Anício',
   title: 'aa dev',
   description:
