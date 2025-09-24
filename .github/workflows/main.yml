@@ -3,7 +3,7 @@ name: Main Workflow
 on:
   push:
     branches-ignore:
-      - master
+      - main
   workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
