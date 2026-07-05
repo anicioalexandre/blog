@@ -191,6 +191,11 @@ import { Image } from 'astro:assets'
       dialog.querySelectorAll('[data-close-dialog]').forEach((closeButton) => {
         closeButton.addEventListener('click', () => dialog.close())
       })
+      // Dialog links open in a new tab — close the dialog so it isn't
+      // still sitting open when the reader comes back.
+      dialog.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => dialog.close())
+      })
     })
   }
   document.addEventListener('astro:page-load', bindDialogs)
