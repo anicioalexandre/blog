@@ -11,14 +11,14 @@ const Button: FC<ButtonProps> = ({
   ...props
 }) => {
   const sizeStyles = {
-    small: 'h-7 px-2 text text-sm font-bold',
-    medium: 'h-8 px-3',
-    large: 'h-10 px-4 text-lg',
+    small: 'h-7 px-2 text-[11px]',
+    medium: 'h-8 px-3 text-[11px]',
+    large: 'h-10 px-5 text-base',
   }
 
   const variantStyles = {
-    contained: 'bg-primary-high text-object-high',
-    text: 'text-primary-high bg-transparent disabled:bg-transparent',
+    contained: 'bg-primary-main text-object-contrast',
+    text: 'bg-surface-default text-object-high',
   }
 
   return (
@@ -27,7 +27,7 @@ const Button: FC<ButtonProps> = ({
         className ?? '',
         sizeStyles[size],
         variantStyles[variant],
-        'prose-button grid items-center justify-center gap-1 rounded text-center active:hover:opacity-80 disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:text-object-low',
+        'grid select-none items-center justify-center gap-1 rounded-none border-2 border-ink text-center text-xs font-semibold shadow-key transition-none focus-visible:outline-dotted focus-visible:outline-1 focus-visible:outline-offset-[-4px] focus-visible:outline-ink active:translate-y-[3px] active:shadow-none disabled:translate-y-0 disabled:cursor-not-allowed disabled:border-object-disabled disabled:bg-surface-disabled disabled:text-object-disabled disabled:shadow-none',
       )}
       {...props}
     />

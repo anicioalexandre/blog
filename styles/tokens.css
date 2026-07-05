@@ -1,0 +1,64 @@
+/*
+ * Themed design tokens. Values are RGB channel triplets (not hex) so
+ * Tailwind can apply alpha modifiers, e.g. bg-surface-background/70.
+ * Light lives on :root, dark on :root.dark — toggled before first paint
+ * by the inline script in Head.
+ */
+:root {
+  color-scheme: light;
+
+  /* surface — warm paper */
+  --surface-background: 238 237 228; /* #EEEDE4 */
+  --surface-default: 245 244 236; /* #F5F4EC */
+  --surface-active: 231 229 217; /* #E7E5D9 */
+  --surface-disabled: 200 197 184; /* #C8C5B8 */
+  --surface-border: 21 21 21; /* #151515 — hard ink borders */
+
+  /* object — warm ink */
+  --object-high: 21 21 21; /* #151515 */
+  --object-low: 93 90 80; /* #5D5A50 */
+  --object-disabled: 155 151 138; /* #9B978A */
+  --object-contrast: 21 21 21; /* text on amber fills, both themes */
+
+  /* primary — amber */
+  --primary-high: 138 84 7; /* #8A5407 — text-safe on paper */
+  --primary-main: 252 163 17; /* #FCA311 */
+  --primary-low: 255 199 100; /* #FFC764 */
+  --primary-overlay: 255 230 179; /* #FFE6B3 */
+
+  /* retro chrome */
+  --ink: 21 21 21;
+  --shadow-hard: 21 21 21;
+  --bevel-face: 223 220 207; /* #DFDCCF */
+  --bevel-light: 255 255 255;
+  --bevel-dark: 138 134 122; /* #8A867A */
+  --bevel-darker: 21 21 21;
+}
+
+:root.dark {
+  color-scheme: dark;
+
+  /* surface — warm charcoal */
+  --surface-background: 29 31 39; /* #1D1F27 */
+  --surface-default: 36 38 47; /* #24262F */
+  --surface-active: 43 45 55; /* #2B2D37 */
+  --surface-disabled: 85 87 95; /* #55575F */
+  --surface-border: 74 76 85; /* #4A4C55 */
+
+  --object-high: 237 237 235; /* #EDEDEB */
+  --object-low: 166 164 156; /* #A6A49C */
+  --object-disabled: 107 109 116; /* #6B6D74 */
+  --object-contrast: 21 21 21;
+
+  --primary-high: 252 163 17; /* bright amber is text-safe on dark */
+  --primary-main: 252 163 17;
+  --primary-low: 255 199 100;
+  --primary-overlay: 138 84 7;
+
+  --ink: 0 0 0;
+  --shadow-hard: 0 0 0;
+  --bevel-face: 58 60 70; /* #3A3C46 */
+  --bevel-light: 106 109 120; /* #6A6D78 */
+  --bevel-dark: 20 21 26; /* #14151A */
+  --bevel-darker: 0 0 0;
+}

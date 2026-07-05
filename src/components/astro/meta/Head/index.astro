@@ -21,6 +21,20 @@ const siteTitle = `${config.title} | ${title}`
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<script is:inline>
+  // Set the theme before first paint (and re-apply after view transitions)
+  // so there is no flash of the wrong theme.
+  const applyStoredTheme = () => {
+    const stored = localStorage.getItem('theme')
+    const dark = stored
+      ? stored === 'dark'
+      : window.matchMedia('(prefers-color-scheme: dark)').matches
+    document.documentElement.classList.toggle('dark', dark)
+  }
+  applyStoredTheme()
+  document.addEventListener('astro:after-swap', applyStoredTheme)
+</script>
 <meta name="generator" content={Astro.generator} />
 
 <link rel="canonical" href={canonicalURL} />
