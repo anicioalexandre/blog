@@ -42,7 +42,6 @@ export default {
         },
       },
       boxShadow: {
-        key: '0 3px 0 0 rgb(var(--shadow-hard))',
         retro: '4px 4px 0 0 rgb(var(--shadow-hard))',
         'retro-sm': '2px 2px 0 0 rgb(var(--shadow-hard))',
       },

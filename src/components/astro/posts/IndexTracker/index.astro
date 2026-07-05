@@ -45,6 +45,10 @@ const SEGMENTS = 16
     transition: none;
   }
 
+  .tracker-item:focus-visible {
+    @apply outline-dotted outline-1 outline-offset-[-2px] outline-ink;
+  }
+
   .tracker-box {
     @apply mt-[5px] block h-2.5 w-2.5 shrink-0 border border-ink bg-transparent;
   }

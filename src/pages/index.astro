@@ -2,17 +2,68 @@
 import { Image } from 'astro:assets'
 import PostsPreview from 'components/astro/posts/PostsPreview/index.astro'
 import RootLayout from 'layouts/RootLayout.astro'
+import { cls } from 'utils/string'
+
+const strengths = [
+  {
+    title: 'Frontend architecture',
+    body: 'Micro-frontends, monorepos, and shared code and tooling across web and native. From complex legacy applications to greenfield platforms.',
+  },
+  {
+    title: 'Backend & data',
+    body: 'Django and Node.js services with GraphQL/REST, event-driven pipelines with worker pools and message queues, and query and SQL optimization on PostgreSQL.',
+  },
+  {
+    title: 'Cloud & DevOps',
+    body: 'Azure, GCP and AWS with Terraform, Docker and Kubernetes. Infrastructure as code for automated, replicable and secure environments, backed by reliable CI/CD.',
+  },
+  {
+    title: 'Leadership & OSS',
+    body: 'Leads a company-wide frontend guild: mentoring engineers, running workshops, and steering technical direction. Creator and maintainer of an open-source NPM package suite used across projects.',
+  },
+]
+
+const journey = [
+  {
+    company: 'SmarttBot',
+    role: 'Software Engineer',
+    period: '2020–21',
+    current: false,
+    body: 'Micro-frontends and a framework-agnostic design system for a trading platform serving 2,000+ active traders, with reach into a 15M-user banking app.',
+  },
+  {
+    company: 'GovPredict',
+    role: 'Software Engineer',
+    period: '2021',
+    current: false,
+    body: 'React and Rails/Elasticsearch features for a legislative-tracking SaaS, later acquired by Quorum.',
+  },
+  {
+    company: 'The SilverLogic',
+    role: 'Full-Stack Engineer',
+    period: '2021–23',
+    current: false,
+    body: 'Migrated a franchise platform to a micro-frontend monorepo supporting 20+ stores and 30,000+ users; cut CI/CD from 25 to 4 minutes.',
+  },
+  {
+    company: 'The SilverLogic',
+    role: 'Senior Software Engineer',
+    period: '2023–now',
+    current: true,
+    body: 'Architected an event-driven pipeline ingesting 10k+ events/day. Tech lead for a 5–8 engineer team: architecture decisions alongside PO and client, unblocking devs while staying hands-on. Lead the company-wide frontend guild (40+ engineers) for mentoring and knowledge sharing.',
+  },
+]
 ---
 
 <RootLayout title="Home">
-  <div class="grid gap-10">
+  <div class="grid gap-12">
     <section class="grid gap-8 md:grid-cols-[max-content_1fr]">
       <Image
-        width={256}
-        height={256}
+        width={208}
+        height={208}
         src="/images/me.jpeg"
         alt="Author"
-        class="self-center justify-self-center rounded-none border-2 border-ink bg-cover shadow-retro"
+        class="justify-self-center rounded-none border-2 border-ink bg-cover shadow-retro md:self-start"
         loading="eager"
       />
       <div class="grid auto-rows-min gap-4">
@@ -26,9 +77,88 @@ import RootLayout from 'layouts/RootLayout.astro'
           This blog is a space to share insights from my professional journey, practical guides, and
           stories about how I approach challenges in software development.
         </p>
-        <p class="prose-h6">Thanks for stopping by, enjoy your stay!</p>
       </div>
     </section>
+
+    <section class="grid gap-4">
+      <h2 class="prose-h3 text-object-high">What I'm strongest at</h2>
+      <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          strengths.map((strength) => (
+            <li class="border-2 border-ink bg-surface-default p-4 shadow-retro">
+              <span class="inline-block border border-ink bg-primary-main px-2 py-0.5 text-xs font-extrabold text-object-contrast">
+                {strength.title}
+              </span>
+              <p class="prose-body2 mt-3 text-object-high">{strength.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="grid gap-2">
+      <div class="flex items-center justify-between gap-4">
+        <h2 class="prose-h3 text-object-high">My journey</h2>
+        <button
+          type="button"
+          data-open-dialog="cv-dialog"
+          aria-haspopup="dialog"
+          class="inline-flex h-9 shrink-0 select-none items-center border-2 border-ink bg-primary-main px-3 text-sm font-bold text-object-contrast shadow-retro-sm transition-none hover:bg-primary-low focus-visible:outline-dotted focus-visible:outline-1 focus-visible:outline-offset-[-4px] focus-visible:outline-ink active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
+        >
+          View full curriculum →
+        </button>
+      </div>
+      <div class="relative">
+        <div
+          class="absolute inset-x-0 top-1/2 hidden h-[2px] -translate-y-1/2 bg-ink md:block"
+          aria-hidden="true"
+        >
+        </div>
+        <ol class="flex flex-col-reverse gap-6 md:grid md:grid-cols-4 md:gap-4">
+          {
+            journey.map((job, i) => {
+              const isTop = i % 2 === 0
+              const card = (
+                <article class="border-2 border-ink bg-surface-default p-3 shadow-retro">
+                  <h3 class="prose-subtitle1 font-bold text-object-high">{job.company}</h3>
+                  <p class="prose-caption text-object-low">{job.role}</p>
+                  <p class="prose-body2 mt-2 text-object-high">{job.body}</p>
+                </article>
+              )
+              return (
+                <li class="grid gap-2 md:grid-rows-[1fr_auto_1fr] md:gap-0">
+                  <div
+                    class={isTop ? 'order-2 md:order-none md:self-end md:pb-4' : 'hidden md:block'}
+                  >
+                    {isTop && card}
+                  </div>
+                  <div class="order-1 flex justify-center md:order-none">
+                    <span
+                      class={cls(
+                        'relative z-10 border border-ink px-2 py-0.5 text-xs font-bold',
+                        job.current
+                          ? 'bg-object-high text-surface-background'
+                          : 'bg-primary-main text-object-contrast',
+                      )}
+                    >
+                      {job.period}
+                    </span>
+                  </div>
+                  <div
+                    class={
+                      !isTop ? 'order-2 md:order-none md:self-start md:pt-4' : 'hidden md:block'
+                    }
+                  >
+                    {!isTop && card}
+                  </div>
+                </li>
+              )
+            })
+          }
+        </ol>
+      </div>
+    </section>
+
     <PostsPreview />
   </div>
 </RootLayout>
