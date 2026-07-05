@@ -128,14 +128,14 @@ const ReactionButton: FC<ReactionButtonProps> = ({ discussionId }) => {
   // A toggle key: raised while un-reacted, stays pressed-in (dropped, no
   // edge) and amber once reacted.
   const buttonBase =
-    'flex h-10 select-none items-center gap-2 rounded-none border-2 border-ink px-3 transition-none'
+    'flex h-10 select-none items-center gap-2 rounded-none border-2 border-ink px-3 transition-none focus-visible:outline-dotted focus-visible:outline-1 focus-visible:outline-offset-[-4px] focus-visible:outline-ink'
   const buttonStyle = hasReacted
-    ? 'translate-y-[3px] bg-primary-main text-object-contrast shadow-none'
-    : 'bg-surface-default text-object-high shadow-key hover:bg-surface-active active:translate-y-[3px] active:shadow-none'
+    ? 'translate-x-[2px] translate-y-[2px] bg-primary-main text-object-contrast shadow-none'
+    : 'bg-surface-default text-object-high shadow-retro-sm hover:bg-surface-active active:translate-x-[2px] active:translate-y-[2px] active:shadow-none'
 
   const buttonContent = (
     <>
-      <span className="emoji-font">{`\u2764\uFE0F`}</span>
+      <span className="emoji-font" aria-hidden="true">{`\u2764\uFE0F`}</span>
       <span className="prose-subtitle1 min-w-[20px] text-center">
         {heartReactionGroup?.reactors.totalCount}
       </span>
@@ -148,6 +148,8 @@ const ReactionButton: FC<ReactionButtonProps> = ({ discussionId }) => {
         <button
           onClick={() => handleReaction()}
           disabled={isAddinReaction || isRemovingReaction}
+          aria-pressed={hasReacted}
+          aria-label="Like this post"
           className={cls(buttonBase, buttonStyle, 'disabled:cursor-not-allowed')}
         >
           {buttonContent}
@@ -158,7 +160,12 @@ const ReactionButton: FC<ReactionButtonProps> = ({ discussionId }) => {
     const signInUrl = `${import.meta.env.PUBLIC_WEBSITE_URL}/api/oauth-login?redirect_to=${redirectTo}`
 
     return (
-      <a title="Sign in to react" className={cls(buttonBase, buttonStyle)} href={signInUrl}>
+      <a
+        title="Sign in to react"
+        aria-label="Sign in to like this post"
+        className={cls(buttonBase, buttonStyle)}
+        href={signInUrl}
+      >
         {buttonContent}
       </a>
     )

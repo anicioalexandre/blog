@@ -30,7 +30,7 @@ const Anchor: FC<AnchorProps> = ({
         className ?? '',
         sizeStyles[size],
         variantStyles[variant],
-        'grid select-none items-center justify-center gap-1 rounded-none border-2 border-ink text-center text-xs font-semibold no-underline shadow-key transition-none focus-visible:outline-dotted focus-visible:outline-1 focus-visible:outline-offset-[-4px] focus-visible:outline-ink active:translate-y-[3px] active:shadow-none',
+        'grid select-none items-center justify-center gap-1 rounded-none border-2 border-ink text-center text-xs font-bold no-underline shadow-retro-sm transition-none focus-visible:outline-dotted focus-visible:outline-1 focus-visible:outline-offset-[-4px] focus-visible:outline-ink active:translate-x-[2px] active:translate-y-[2px] active:shadow-none',
       )}
       rel={cls(rel ?? '', customRel ?? '')}
       {...props}

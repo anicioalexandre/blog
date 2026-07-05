@@ -24,13 +24,18 @@ import { Image } from 'astro:assets'
           </a>
         </li>
         <li class="flex items-center">
-          <a href={CV_DOCUMENT} target="_blank" rel="noopener noreferrer" class="nav-key">
+          <button type="button" data-open-dialog="cv-dialog" class="nav-key" aria-haspopup="dialog">
             <Image src="/images/cv-icon.svg" alt="" width={28} height={28} class="nav-icon" />
             <span class="nav-text">Curriculum</span>
-          </a>
+          </button>
         </li>
         <li class="flex items-center">
-          <button type="button" id="links-menu-button" class="nav-key" aria-haspopup="dialog">
+          <button
+            type="button"
+            data-open-dialog="links-dialog"
+            class="nav-key"
+            aria-haspopup="dialog"
+          >
             <Image src="/images/clip-icon.svg" alt="" width={28} height={28} class="nav-icon" />
             <span class="nav-text">Links</span>
           </button>
@@ -52,7 +57,7 @@ import { Image } from 'astro:assets'
     <span class="text-base font-semibold text-object-contrast">Links</span>
     <button
       type="button"
-      id="links-dialog-close"
+      data-close-dialog
       aria-label="Close"
       class="win-bevel flex h-6 w-6 items-center justify-center text-sm font-bold leading-none text-object-high"
     >
@@ -71,34 +76,52 @@ import { Image } from 'astro:assets'
   </div>
 </dialog>
 
-<style>
-  /* Nav items are 3D keys at all times; on scroll only the labels collapse. */
-  /* Icon-only (mobile + scrolled): exact 40x40 square. With labels (desktop
-     at top): auto width + padding. */
-  .nav-key {
-    @apply flex h-10 w-10 shrink-0 select-none items-center justify-center gap-1 border-2 border-ink bg-surface-default px-0 text-base font-semibold text-object-high no-underline shadow-key transition-none md:w-auto md:px-3;
-  }
-  header.scrolling-header .nav-key {
-    @apply w-10 px-0;
-  }
+<dialog
+  id="cv-dialog"
+  class="m-auto w-72 rounded-none border-2 border-ink bg-surface-default p-0 shadow-retro backdrop:bg-black-main/60"
+>
+  <div class="flex items-center justify-between border-b-2 border-ink bg-primary-main px-3 py-2">
+    <span class="text-base font-semibold text-object-contrast">Curriculum</span>
+    <button
+      type="button"
+      data-close-dialog
+      aria-label="Close"
+      class="win-bevel flex h-6 w-6 items-center justify-center text-sm font-bold leading-none text-object-high"
+    >
+      &times;
+    </button>
+  </div>
+  <div class="grid gap-3 p-4">
+    <p class="prose-body2 text-object-high">
+      My full curriculum is a PDF document — it opens my curriculum in a new browser tab.
+    </p>
+    <a href={CV_DOCUMENT} target="_blank" rel="noopener noreferrer" class="dialog-cta">
+      Open curriculum (PDF) →
+    </a>
+  </div>
+</dialog>
 
-  /* Pin the icon size — inside the scroll-collapsed flex container, an
-     unpinned img (preflight max-width:100%) shrinks to zero. */
-  img.nav-icon {
-    @apply h-7 w-7 max-w-none shrink-0;
+<style>
+  /* Mobile: icon-only 32x32 squares. Desktop: text-only keys, no icons.
+     Offset hard shadow like the framed cards; press moves diagonally. */
+  .nav-key {
+    @apply flex h-8 w-8 shrink-0 select-none items-center justify-center gap-1 border-2 border-ink bg-surface-default px-0 text-sm font-bold text-object-high no-underline shadow-retro-sm transition-none md:w-auto md:px-3;
   }
   .nav-key:hover {
     @apply bg-surface-active;
   }
   .nav-key:active {
-    @apply translate-y-[3px] shadow-none;
+    @apply translate-x-[2px] translate-y-[2px] shadow-none;
+  }
+
+  /* Pin the icon size — inside the scroll-collapsed flex container, an
+     unpinned img (preflight max-width:100%) shrinks to zero. */
+  img.nav-icon {
+    @apply h-6 w-6 max-w-none shrink-0 md:hidden;
   }
 
   span.nav-text {
     @apply hidden md:block;
-  }
-  header.scrolling-header span.nav-text {
-    @apply hidden;
   }
 
   /* Scrolled state: the wordmark detaches into a hard paper chip — no blur,
@@ -122,7 +145,11 @@ import { Image } from 'astro:assets'
   }
 
   a.dialog-link {
-    @apply flex items-center gap-2 border-2 border-ink bg-surface-background px-3 py-2 text-base font-semibold text-object-high no-underline shadow-key transition-none hover:bg-surface-active active:translate-y-[3px] active:shadow-none;
+    @apply flex items-center gap-2 border-2 border-ink bg-surface-background px-3 py-2 text-base font-bold text-object-high no-underline shadow-retro-sm transition-none hover:bg-surface-active active:translate-x-[2px] active:translate-y-[2px] active:shadow-none;
+  }
+
+  a.dialog-cta {
+    @apply flex items-center justify-center gap-1 border-2 border-ink bg-primary-main px-3 py-2 text-base font-bold text-object-contrast no-underline shadow-retro-sm transition-none hover:bg-primary-low active:translate-x-[2px] active:translate-y-[2px] active:shadow-none;
   }
 
   header h1 a {
@@ -144,18 +171,27 @@ import { Image } from 'astro:assets'
   window.addEventListener('scroll', onScroll, { passive: true })
   document.addEventListener('astro:page-load', onScroll)
 
-  const bindLinksDialog = () => {
-    const openButton = document.getElementById('links-menu-button')
-    const dialog = document.getElementById('links-dialog')
-    const closeButton = document.getElementById('links-dialog-close')
-    if (!openButton || !closeButton || !(dialog instanceof HTMLDialogElement)) return
-    if (openButton.dataset.bound === 'true') return
-    openButton.dataset.bound = 'true'
-    openButton.addEventListener('click', () => dialog.showModal())
-    closeButton.addEventListener('click', () => dialog.close())
-    dialog.addEventListener('click', (event) => {
-      if (event.target === dialog) dialog.close()
+  // Any element with data-open-dialog="<id>" opens that dialog; anything
+  // inside a dialog with data-close-dialog closes it. Backdrop click closes.
+  const bindDialogs = () => {
+    document.querySelectorAll<HTMLElement>('[data-open-dialog]').forEach((opener) => {
+      if (opener.dataset.bound === 'true') return
+      opener.dataset.bound = 'true'
+      opener.addEventListener('click', () => {
+        const dialog = document.getElementById(opener.dataset.openDialog ?? '')
+        if (dialog instanceof HTMLDialogElement) dialog.showModal()
+      })
+    })
+    document.querySelectorAll('dialog').forEach((dialog) => {
+      if (dialog.dataset.bound === 'true') return
+      dialog.dataset.bound = 'true'
+      dialog.addEventListener('click', (event) => {
+        if (event.target === dialog) dialog.close()
+      })
+      dialog.querySelectorAll('[data-close-dialog]').forEach((closeButton) => {
+        closeButton.addEventListener('click', () => dialog.close())
+      })
     })
   }
-  document.addEventListener('astro:page-load', bindLinksDialog)
+  document.addEventListener('astro:page-load', bindDialogs)
 </script>
