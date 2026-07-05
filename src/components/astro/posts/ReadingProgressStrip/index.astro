@@ -1,0 +1,24 @@
+---
+// Mobile reading progress. Sits at the end of the post container with
+// sticky bottom, so it rides the bottom of the viewport while reading and
+// settles into the flow (next to the reactions) once the post ends.
+// Segments are filled by the IndexTracker scroll script via [data-progress-bar].
+const SEGMENTS = 24
+---
+
+<div
+  class="sticky bottom-0 z-10 -mx-4 mt-8 flex h-4 gap-[2px] border-y-2 border-ink bg-surface-default p-[3px] md:hidden"
+  data-progress-bar
+>
+  {Array.from({ length: SEGMENTS }).map(() => <span class="segment" aria-hidden="true" />)}
+</div>
+
+<style>
+  .segment {
+    @apply h-full flex-1 bg-surface-active;
+    transition: none;
+  }
+  .segment.is-filled {
+    @apply bg-primary-main;
+  }
+</style>

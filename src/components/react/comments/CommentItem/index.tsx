@@ -26,12 +26,12 @@ const CommentsItem: FC<CommentsItemProps> = ({ commentRef, children, isReply = f
 
   if (isReply) {
     return (
-      <li className="reply-timeline rounded-lg pl-4 pt-0 last:pb-3">
+      <li className="reply-timeline pl-4 pt-0 last:pb-3">
         <div className="flex items-center justify-start space-x-3 py-3 pr-3">
           <img
             src={comment.author?.avatarUrl}
             alt={`${comment.author?.login}'s avatar`}
-            className="z-10 h-[30px] w-[30px] rounded-full"
+            className="z-10 h-[30px] w-[30px] rounded-none border border-ink"
           />
           <div className="grid grid-cols-[1fr_max-content] items-end gap-2">
             <p className="prose-subtitle2">{comment.author?.login}</p>
@@ -47,12 +47,12 @@ const CommentsItem: FC<CommentsItemProps> = ({ commentRef, children, isReply = f
   }
 
   return (
-    <li className="rounded-lg border border-surface-border bg-surface-active">
+    <li className="border border-ink bg-surface-background">
       <div className="flex items-center justify-start space-x-3 p-4">
         <img
           src={comment.author?.avatarUrl}
           alt={`${comment.author?.login}'s avatar`}
-          className="z-10 h-8 w-8 rounded-full"
+          className="z-10 h-8 w-8 rounded-none border border-ink"
         />
         <div className="grid grid-cols-[1fr_max-content] items-end gap-2">
           <p className="prose-subtitle2">{comment.author?.login}</p>

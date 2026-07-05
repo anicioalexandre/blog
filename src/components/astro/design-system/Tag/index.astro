@@ -7,7 +7,7 @@ const { class: customClass, ...props } = Astro.props
 
 <span
   class={cls(
-    'grid items-center justify-center prose-overline rounded bg-primary-high px-1 text-center text-object-high',
+    'grid items-center justify-center prose-overline rounded-none border border-ink bg-primary-main px-1 text-center text-object-contrast',
     customClass ?? '',
   )}
   {...props}

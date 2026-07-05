@@ -1,13 +1,11 @@
 ---
-import { GITHUB_PROFILE, LINKEDIN_PROFILE } from 'constants/links'
+import { CV_DOCUMENT, GITHUB_PROFILE, LINKEDIN_PROFILE } from 'constants/links'
 
-import Anchor from '../Anchor/index.astro'
+import ThemeToggle from '../ThemeToggle/index.astro'
 import { Image } from 'astro:assets'
 ---
 
-<header
-  class="not-scrolling-header pointer-events-none sticky left-0 top-0 z-20 flex w-full justify-center"
->
+<header class="pointer-events-none sticky left-0 top-0 z-20 flex w-full justify-center">
   <div
     id="header-container"
     class="pointer-events-auto flex w-full max-w-6xl flex-[0] items-center justify-center gap-3 px-4 py-2 md:flex-1 md:justify-between md:p-3"
@@ -18,36 +16,27 @@ import { Image } from 'astro:assets'
       <a href="/" class="text-inherit no-underline">aa dev</a>
     </h1>
     <nav class="w-fit">
-      <ul class="flex justify-center space-x-2">
-        <li class="animation flex items-center gap-1">
-          <Anchor href="/blog" class="nav-icon">
-            <Image src="/images/blog-icon.svg" alt="Logo" width={32} height={32} class="nav-icon" />
-          </Anchor>
-          <Anchor href="/blog" class="nav-text">Blog</Anchor>
+      <ul class="flex items-center justify-center space-x-2">
+        <li class="flex items-center">
+          <a href="/blog" class="nav-key">
+            <Image src="/images/blog-icon.svg" alt="" width={28} height={28} class="nav-icon" />
+            <span class="nav-text">Blog</span>
+          </a>
         </li>
-        <li class="animation flex items-center gap-1">
-          <Anchor href={GITHUB_PROFILE} class="nav-icon">
-            <Image
-              src="/images/github-icon.svg"
-              alt="Logo"
-              width={32}
-              height={32}
-              class="nav-icon"
-            />
-          </Anchor>
-          <Anchor href={GITHUB_PROFILE} class="nav-text">GitHub</Anchor>
+        <li class="flex items-center">
+          <a href={CV_DOCUMENT} target="_blank" rel="noopener noreferrer" class="nav-key">
+            <Image src="/images/cv-icon.svg" alt="" width={28} height={28} class="nav-icon" />
+            <span class="nav-text">Curriculum</span>
+          </a>
         </li>
-        <li class="animation flex items-center gap-1">
-          <Anchor href={LINKEDIN_PROFILE} class="nav-icon">
-            <Image
-              src="/images/linkedin-icon.svg"
-              alt="Logo"
-              width={32}
-              height={32}
-              class="nav-icon"
-            />
-          </Anchor>
-          <Anchor href={LINKEDIN_PROFILE} class="nav-text">LinkedIn</Anchor>
+        <li class="flex items-center">
+          <button type="button" id="links-menu-button" class="nav-key" aria-haspopup="dialog">
+            <Image src="/images/clip-icon.svg" alt="" width={28} height={28} class="nav-icon" />
+            <span class="nav-text">Links</span>
+          </button>
+        </li>
+        <li class="flex items-center">
+          <ThemeToggle />
         </li>
       </ul>
     </nav>
@@ -55,102 +44,89 @@ import { Image } from 'astro:assets'
 </header>
 <div id="scroll-trigger"></div>
 
+<dialog
+  id="links-dialog"
+  class="m-auto w-72 rounded-none border-2 border-ink bg-surface-default p-0 shadow-retro backdrop:bg-black-main/60"
+>
+  <div class="flex items-center justify-between border-b-2 border-ink bg-primary-main px-3 py-2">
+    <span class="text-base font-semibold text-object-contrast">Links</span>
+    <button
+      type="button"
+      id="links-dialog-close"
+      aria-label="Close"
+      class="win-bevel flex h-6 w-6 items-center justify-center text-sm font-bold leading-none text-object-high"
+    >
+      &times;
+    </button>
+  </div>
+  <div class="grid gap-3 p-4">
+    <a href={GITHUB_PROFILE} target="_blank" rel="noopener noreferrer" class="dialog-link">
+      <Image src="/images/github-icon.svg" alt="" width={28} height={28} />
+      <span>GitHub</span>
+    </a>
+    <a href={LINKEDIN_PROFILE} target="_blank" rel="noopener noreferrer" class="dialog-link">
+      <Image src="/images/linkedin-icon.svg" alt="" width={28} height={28} />
+      <span>LinkedIn</span>
+    </a>
+  </div>
+</dialog>
+
 <style>
-  @keyframes flash-in {
-    0% {
-      transform: scale(1);
-      border-radius: 9999px;
-      border-width: 1px;
-      border-style: solid;
-      border-color: transparent;
-    }
-    30% {
-      transform: scale(0.65);
-    }
-    60% {
-      transform: scale(0.85);
-    }
-    100% {
-      transform: scale(1);
-      border-radius: 9999px;
-      border-width: 1px;
-      border-style: solid;
-      border-color: var(--surface-border);
-      background-color: rgb(var(--surface-background) / 0.7);
-      backdrop-filter: blur(16px);
-    }
+  /* Nav items are 3D keys at all times; on scroll only the labels collapse. */
+  /* Icon-only (mobile + scrolled): exact 40x40 square. With labels (desktop
+     at top): auto width + padding. */
+  .nav-key {
+    @apply flex h-10 w-10 shrink-0 select-none items-center justify-center gap-1 border-2 border-ink bg-surface-default px-0 text-base font-semibold text-object-high no-underline shadow-key transition-none md:w-auto md:px-3;
+  }
+  header.scrolling-header .nav-key {
+    @apply w-10 px-0;
   }
 
-  @keyframes flash-out {
-    0% {
-      transform: scale(0);
-      border-radius: 9999px;
-      border-width: 1px;
-      border-style: solid;
-      border-color: var(--surface-border);
-      background-color: rgb(var(--surface-background) / 0.7);
-      backdrop-filter: blur(16px);
-    }
-    30% {
-      transform: scale(0.6);
-    }
-    60% {
-      transform: scale(0.88);
-    }
-    100% {
-      transform: scale(1);
-      border-radius: 9999px;
-      border-width: 1px;
-      border-style: solid;
-      border-color: transparent;
-    }
+  /* Pin the icon size — inside the scroll-collapsed flex container, an
+     unpinned img (preflight max-width:100%) shrinks to zero. */
+  img.nav-icon {
+    @apply h-7 w-7 max-w-none shrink-0;
+  }
+  .nav-key:hover {
+    @apply bg-surface-active;
+  }
+  .nav-key:active {
+    @apply translate-y-[3px] shadow-none;
   }
 
-  a.nav-text {
+  span.nav-text {
     @apply hidden md:block;
   }
-  header.scrolling-header a.nav-text {
+  header.scrolling-header span.nav-text {
     @apply hidden;
   }
 
-  a.nav-icon {
-    @apply block w-8;
+  /* Scrolled state: the wordmark detaches into a hard paper chip — no blur,
+     no bounce. Paper-layer motion: quick ease-out. */
+  header h1 a {
+    @apply rounded-none border-2 border-transparent p-1;
+    transition:
+      background-color 150ms ease-out,
+      border-color 150ms ease-out,
+      box-shadow 150ms ease-out;
   }
-  header.scrolling-header a.nav-icon {
-    @apply block;
-  }
-
-  header:not(.not-scrolling-header) li.animation {
-    @apply animate-none md:animate-[flash-out_0.5s_cubic-bezier(0.4,0,0.2,1)];
-  }
-  header.scrolling-header li.animation {
-    @apply animate-[flash-int_0.5s_cubic-bezier(0.4,0,0.2,1)] md:animate-none;
-  }
-
-  header li {
-    @apply rounded-full border border-solid border-transparent;
-    transition: all 0.3s ease-in-out;
-  }
-  header.scrolling-header li {
-    @apply rounded-full border border-solid border-surface-border bg-surface-background/70 backdrop-blur-lg;
-    transition: all 0.3s ease-in-out;
+  header.scrolling-header h1 a {
+    @apply border-ink bg-surface-default shadow-retro-sm;
   }
 
   div#header-container {
-    transition: flex 0.5s ease-in-out;
+    transition: flex 150ms ease-out;
   }
   header.scrolling-header div#header-container {
     @apply flex-[0];
-    transition: flex 0.5s ease-in-out;
+  }
+
+  a.dialog-link {
+    @apply flex items-center gap-2 border-2 border-ink bg-surface-background px-3 py-2 text-base font-semibold text-object-high no-underline shadow-key transition-none hover:bg-surface-active active:translate-y-[3px] active:shadow-none;
   }
 
   header h1 a {
-    @apply flex h-[60px] w-[134px] items-center justify-center rounded-full border border-solid border-transparent;
-    transition: all 0.3s ease-in-out;
-  }
-  header.scrolling-header h1 a {
-    @apply rounded-full border border-solid border-surface-border bg-surface-background/70 backdrop-blur-lg;
-    transition: all 0.3s ease-in-out;
+    @apply flex h-[60px] w-[134px] items-center justify-center;
   }
 </style>
 
@@ -160,22 +136,26 @@ import { Image } from 'astro:assets'
   const onScroll = () => {
     const headerElement = document.querySelector('header')
     const scrollTriggerElement = document.querySelector('#scroll-trigger')
-    let scrollingHeader = false
-    const rect = scrollTriggerElement!.getBoundingClientRect()
-    if (rect.top <= transitionBoundary) {
-      scrollingHeader = true
-    }
-    if (scrollingHeader) {
-      headerElement!.classList.add('scrolling-header')
-      headerElement!.classList.remove('not-scrolling-header')
-    } else {
-      headerElement!.classList.remove('scrolling-header')
-    }
-    if (rect.top === 84) {
-      headerElement!.classList.remove('scrolling-header')
-      headerElement!.classList.add('not-scrolling-header')
-    }
+    if (!headerElement || !scrollTriggerElement) return
+    const rect = scrollTriggerElement.getBoundingClientRect()
+    headerElement.classList.toggle('scrolling-header', rect.top <= transitionBoundary)
   }
 
-  window.addEventListener('scroll', onScroll)
+  window.addEventListener('scroll', onScroll, { passive: true })
+  document.addEventListener('astro:page-load', onScroll)
+
+  const bindLinksDialog = () => {
+    const openButton = document.getElementById('links-menu-button')
+    const dialog = document.getElementById('links-dialog')
+    const closeButton = document.getElementById('links-dialog-close')
+    if (!openButton || !closeButton || !(dialog instanceof HTMLDialogElement)) return
+    if (openButton.dataset.bound === 'true') return
+    openButton.dataset.bound = 'true'
+    openButton.addEventListener('click', () => dialog.showModal())
+    closeButton.addEventListener('click', () => dialog.close())
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close()
+    })
+  }
+  document.addEventListener('astro:page-load', bindLinksDialog)
 </script>

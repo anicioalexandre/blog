@@ -11,29 +11,30 @@ interface Props {
 const { post } = Astro.props
 ---
 
-<a href={`blog/${post.id}`} class="max-h-[200px] max-w-[300px] transition-opacity hover:opacity-85">
-  <div class="grid gap-2">
-    <Image
-      src={post.data.hero}
-      alt={post.data.title}
-      width={300}
-      height={200}
-      format="webp"
-      quality={100}
-      widths={[150, 300, 450]}
-      sizes="(max-width: 640px) 150px, (max-width: 768px) 300px, 450px"
-      class="max-h-[200px] max-w-[300px] rounded-lg object-cover"
-      loading="eager"
-    />
-    <div class="grid">
-      <p class="prose-body1 justify-self-stretch text-wrap text-object-low">
-        {formatDate(post.data.date)} - {post.data.minutesRead}
-      </p>
-      <div class="grid gap-3">
-        <h5 class="prose-h5 text-wrap text-object-high">{post.data.title}</h5>
-        <div class="flex gap-2">
-          {post.data.tags.map((tag) => <Tag>{tag}</Tag>)}
-        </div>
+<a
+  href={`blog/${post.id}`}
+  class="block max-w-[300px] border-2 border-ink bg-surface-default shadow-retro-sm transition-[transform,box-shadow] duration-150 ease-out hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-retro"
+>
+  <Image
+    src={post.data.hero}
+    alt={post.data.title}
+    width={300}
+    height={200}
+    format="webp"
+    quality={100}
+    widths={[150, 300, 450]}
+    sizes="(max-width: 640px) 150px, (max-width: 768px) 300px, 450px"
+    class="max-h-[200px] w-full border-b-2 border-ink object-cover"
+    loading="eager"
+  />
+  <div class="grid gap-2 p-3">
+    <p class="prose-body1 justify-self-stretch text-wrap text-object-low">
+      {formatDate(post.data.date)} - {post.data.minutesRead}
+    </p>
+    <div class="grid gap-3">
+      <h5 class="prose-h5 text-wrap text-object-high">{post.data.title}</h5>
+      <div class="flex gap-2">
+        {post.data.tags.map((tag) => <Tag>{tag}</Tag>)}
       </div>
     </div>
   </div>

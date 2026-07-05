@@ -125,15 +125,32 @@ const ReactionButton: FC<ReactionButtonProps> = ({ discussionId }) => {
     }
   }
 
+  // A toggle key: raised while un-reacted, stays pressed-in (dropped, no
+  // edge) and amber once reacted.
+  const buttonBase =
+    'flex h-10 select-none items-center gap-2 rounded-none border-2 border-ink px-3 transition-none'
+  const buttonStyle = hasReacted
+    ? 'translate-y-[3px] bg-primary-main text-object-contrast shadow-none'
+    : 'bg-surface-default text-object-high shadow-key hover:bg-surface-active active:translate-y-[3px] active:shadow-none'
+
+  const buttonContent = (
+    <>
+      <span className="emoji-font">{`\u2764\uFE0F`}</span>
+      <span className="prose-subtitle1 min-w-[20px] text-center">
+        {heartReactionGroup?.reactors.totalCount}
+      </span>
+    </>
+  )
+
   const renderButton = () => {
     if (isLoggedIn)
       return (
         <button
           onClick={() => handleReaction()}
           disabled={isAddinReaction || isRemovingReaction}
-          className={cls('emoji-font h-8 w-10 rounded', buttonStyle)}
+          className={cls(buttonBase, buttonStyle, 'disabled:cursor-not-allowed')}
         >
-          {`\u2764\uFE0F`}
+          {buttonContent}
         </button>
       )
 
@@ -141,17 +158,11 @@ const ReactionButton: FC<ReactionButtonProps> = ({ discussionId }) => {
     const signInUrl = `${import.meta.env.PUBLIC_WEBSITE_URL}/api/oauth-login?redirect_to=${redirectTo}`
 
     return (
-      <a
-        title="Sign in to react"
-        className={cls('emoji-font flex h-8 w-10 items-center justify-center rounded', buttonStyle)}
-        href={signInUrl}
-      >
-        {`\u2764\uFE0F`}
+      <a title="Sign in to react" className={cls(buttonBase, buttonStyle)} href={signInUrl}>
+        {buttonContent}
       </a>
     )
   }
-
-  const buttonStyle = hasReacted ? 'bg-primary-main' : 'hover:bg-primary-main'
 
   const elementRef = useRef<HTMLDivElement>(null)
 
@@ -171,16 +182,7 @@ const ReactionButton: FC<ReactionButtonProps> = ({ discussionId }) => {
 
   return (
     <div ref={elementRef} className="flex w-full justify-end pt-6">
-      <div
-        className={
-          'grid grid-cols-[auto_min-content] justify-end gap-2 rounded-lg border-[2px] border-surface-border bg-surface-default p-1'
-        }
-      >
-        <p className="prose-subtitle1 grid min-w-[25px] items-center justify-center text-object-high">
-          {heartReactionGroup?.reactors.totalCount}
-        </p>
-        {renderButton()}
-      </div>
+      {renderButton()}
     </div>
   )
 }

@@ -40,7 +40,7 @@ const CommentRepliesList: FC<CommentRepliesListProps> = ({ discussionId, comment
 
   return (
     <section>
-      <ul className="rounded-b-lg bg-surface-default">
+      <ul className="bg-surface-default">
         {data?.replies?.edges?.map((edge) => {
           if (!edge?.node) return null
 

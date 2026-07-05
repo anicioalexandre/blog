@@ -2,9 +2,10 @@
 import { cls } from 'utils/string'
 
 interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
-  isMdx: boolean
+  isMdx?: boolean
+  isButton?: boolean
 }
-const { class: customClass = '', rel: customRel, isMdx, ...props } = Astro.props
+const { class: customClass = '', rel: customRel, isMdx, isButton, ...props } = Astro.props
 
 const isExternalLink = (href: astroHTML.JSX.AnchorHTMLAttributes['href']) => {
   try {
@@ -20,15 +21,19 @@ const externalLink = isExternalLink(props.href)
 const rel = externalLink ? 'noopener noreferrer' : undefined
 const target = externalLink ? '_blank' : undefined
 
-const textColor = isMdx ? 'text-primary-high hover:opacity-80' : 'hover:text-primary-high'
+// Prose links: always underlined, marker-highlight on hover.
+// Nav/UI links: quiet — no underline, amber on hover.
+// isButton: paper 3D key, same construction as the Button primitive.
+const linkStyles = isMdx
+  ? 'prose-button inline-block text-primary-high underline decoration-2 underline-offset-2 transition-colors duration-150 ease-out hover:bg-primary-main hover:text-object-contrast hover:no-underline'
+  : 'prose-button inline-block no-underline transition-colors duration-150 ease-out hover:text-primary-high'
+
+const buttonStyles =
+  'inline-flex h-8 select-none items-center gap-1 rounded-none border-2 border-ink bg-surface-default px-3 text-xs font-semibold text-object-high no-underline shadow-key transition-none hover:bg-surface-active focus-visible:outline-dotted focus-visible:outline-1 focus-visible:outline-offset-[-4px] focus-visible:outline-ink active:translate-y-[3px] active:shadow-none'
 ---
 
 <a
-  class={cls(
-    'underline-offset-2 inline-block hover:underline prose-button',
-    textColor,
-    customClass ?? '',
-  )}
+  class={cls(isButton ? buttonStyles : linkStyles, customClass ?? '')}
   rel={cls(rel ?? '', customRel ?? '')}
   target={target}
   {...props}

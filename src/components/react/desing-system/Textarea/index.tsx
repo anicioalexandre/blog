@@ -22,14 +22,14 @@ const Textarea: FC<TextareaProps> = ({
   const modeStylesWithIsFocused = isFocused ? modeStyles.default : modeStyles[mode]
 
   return (
-    <div className="flex rounded border border-surface-border bg-surface-default px-1 pt-2 focus-within:border-surface-active">
+    <div className="win-sunken flex px-1 pt-2">
       <textarea
         disabled={isLoading}
         {...props}
         className={cls(
           className ?? '',
           modeStylesWithIsFocused,
-          'w-full rounded border-none bg-transparent p-2 text-object-high outline-none placeholder:text-sm focus:outline-none disabled:cursor-not-allowed disabled:bg-surface-default disabled:text-surface-disabled',
+          'w-full rounded-none border-none bg-transparent p-2 text-object-high outline-none placeholder:text-sm focus:outline-none disabled:cursor-not-allowed disabled:bg-transparent disabled:text-surface-disabled',
         )}
       />
     </div>

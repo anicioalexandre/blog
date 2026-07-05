@@ -1,34 +1,39 @@
-import { black, grey, object, primary, surface, white } from './styles/palette'
+import { black, white } from './styles/palette'
 import { typography } from './styles/typography'
 
 const defaultTheme = require('tailwindcss/defaultTheme')
 
+// Themed tokens are CSS variables defined in styles/tokens.css.
+const token = (name) => `rgb(var(--${name}) / <alpha-value>)`
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
         object: {
-          high: object.high,
-          low: object.low,
-          disabled: object.disabled,
-          contrast: object.contrast,
+          high: token('object-high'),
+          low: token('object-low'),
+          disabled: token('object-disabled'),
+          contrast: token('object-contrast'),
         },
         surface: {
-          background: surface.background,
-          default: surface.default,
-          active: surface.active,
-          disabled: surface.disabled,
-          border: surface.border,
+          background: token('surface-background'),
+          default: token('surface-default'),
+          active: token('surface-active'),
+          disabled: token('surface-disabled'),
+          border: token('surface-border'),
         },
         primary: {
-          high: primary.dark,
-          main: primary.main,
-          low: primary.light,
-          overlay: primary.lighter,
+          high: token('primary-high'),
+          main: token('primary-main'),
+          low: token('primary-low'),
+          overlay: token('primary-overlay'),
           contrast: white.main,
         },
+        ink: token('ink'),
         black: {
           main: black.main,
         },
@@ -36,8 +41,14 @@ export default {
           main: white.main,
         },
       },
+      boxShadow: {
+        key: '0 3px 0 0 rgb(var(--shadow-hard))',
+        retro: '4px 4px 0 0 rgb(var(--shadow-hard))',
+        'retro-sm': '2px 2px 0 0 rgb(var(--shadow-hard))',
+      },
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
+        pixel: ['"Pixelated MS Sans Serif"', ...defaultTheme.fontFamily.mono],
       },
       typography: {
         h1: {
@@ -97,24 +108,25 @@ export default {
             h6: typography.h6,
             p: typography.body1,
             em: {
-              color: object.low,
+              color: 'rgb(var(--object-low))',
               fontStyle: 'italic',
             },
             blockquote: {
-              color: object.low,
-              borderLeftColor: primary.main,
+              color: 'rgb(var(--object-low))',
+              borderLeftColor: 'rgb(var(--primary-main))',
               paddingLeft: '1rem',
               fontStyle: 'italic',
             },
+            // Code blocks stay dark in both themes (matches Shiki github-dark)
             pre: {
-              backgroundColor: surface.active,
+              backgroundColor: '#24292e',
               padding: '1rem',
               borderRadius: '0.375rem',
-              color: object.high,
+              color: '#e6edf3',
             },
             code: {
-              color: object.high,
-              backgroundColor: primary.darker,
+              color: white.main,
+              backgroundColor: '#8A5407',
               padding: '0.15rem 0.25rem',
               borderRadius: '0.25rem',
               '&::before': {

@@ -1,85 +1,126 @@
 ---
-import type { BlogPost } from 'types/blog'
+import type { MarkdownHeading } from 'astro'
 
 interface Props {
-  post: BlogPost
+  headings: MarkdownHeading[]
 }
-const { post } = Astro.props
+const { headings } = Astro.props
 
-const headingRegex = /^###\s*(.+)$/gm
+const trackedHeadings = headings.filter((heading) => heading.depth >= 2 && heading.depth <= 3)
+const minDepth = Math.min(...trackedHeadings.map((heading) => heading.depth))
 
-const headings = [...post?.body!.matchAll(headingRegex)].map((match) => match[1])
+const SEGMENTS = 16
 ---
 
 <aside
-  class="scrollbar sticky top-24 hidden h-fit max-h-[calc(100vh-210px)] overflow-y-auto p-2 pb-16 md:block"
+  class="sticky top-24 hidden h-fit border-2 border-ink bg-surface-default shadow-retro md:block"
 >
-  <nav class="grid">
+  <nav class="scrollbar grid max-h-[calc(100vh-240px)] gap-1 overflow-y-auto p-2">
     {
-      headings.map((heading) => {
-        {
-          const slug = heading.toLowerCase().replace(/\s/g, '-')
-          return (
-            <a href={`#${slug}`} class="index-tracker-timeline prose-body1 p-3 text-object-high">
-              {heading}
-            </a>
-          )
-        }
-      })
+      trackedHeadings.map((heading) => (
+        <a
+          href={`#${heading.slug}`}
+          class="tracker-item prose-body2 flex items-start gap-2 break-words px-1 py-2 text-object-high no-underline"
+          style={`margin-left: ${(heading.depth - minDepth) * 0.75}rem`}
+        >
+          <span class="tracker-box" aria-hidden="true" />
+          <span>{heading.text}</span>
+        </a>
+      ))
     }
   </nav>
+  <div class="flex items-center gap-2 border-t-2 border-ink p-2">
+    <div class="flex h-3 flex-1 gap-[2px]" data-progress-bar>
+      {Array.from({ length: SEGMENTS }).map(() => <span class="segment" aria-hidden="true" />)}
+    </div>
+    <span class="font-pixel text-xs leading-none text-object-high" data-progress-label>0%</span>
+  </div>
 </aside>
 
+<style>
+  /* chrome: state changes snap, no easing */
+  .tracker-item,
+  .tracker-box,
+  .segment {
+    transition: none;
+  }
+
+  .tracker-box {
+    @apply mt-[5px] block h-2.5 w-2.5 shrink-0 border border-ink bg-transparent;
+  }
+  .tracker-item.is-read .tracker-box {
+    @apply bg-primary-main;
+  }
+
+  .tracker-item.is-active {
+    @apply bg-primary-main text-object-contrast;
+  }
+  .tracker-item.is-active .tracker-box {
+    @apply border-object-contrast bg-object-contrast;
+  }
+
+  .segment {
+    @apply h-full flex-1 bg-surface-active;
+  }
+  .segment.is-filled {
+    @apply bg-primary-main;
+  }
+</style>
+
 <script>
-  const transitionBoundary = 150
+  const activationBoundary = 150
 
   const onScroll = () => {
-    const headingsElements = document.querySelectorAll('article h3[id]')
-    const navLinks = document.querySelectorAll('aside nav a')
-    console.log(headingsElements, 'headings')
-    let activeId = headingsElements[0].getAttribute('id') ?? ''
-    headingsElements.forEach((heading) => {
-      const rect = heading.getBoundingClientRect()
-      console.log(rect.top)
-      if (rect.top <= transitionBoundary) {
+    const article = document.querySelector('article')
+    const trackerItems = document.querySelectorAll<HTMLAnchorElement>('a.tracker-item')
+    if (!article || trackerItems.length === 0) return
+
+    const headingElements = article.querySelectorAll('h2[id], h3[id]')
+    let activeId = headingElements[0]?.getAttribute('id') ?? ''
+    headingElements.forEach((heading) => {
+      if (heading.getBoundingClientRect().top <= activationBoundary) {
         activeId = heading.getAttribute('id') ?? ''
       }
     })
 
-    if (activeId) {
-      const activeIndex = Array.from(navLinks).findIndex(
-        (link) => link.getAttribute('href') === `#${activeId}`,
-      )
+    const activeIndex = Array.from(trackerItems).findIndex(
+      (item) => item.getAttribute('href') === `#${activeId}`,
+    )
+    trackerItems.forEach((item, i) => {
+      item.classList.toggle('is-read', i < activeIndex)
+      item.classList.toggle('is-active', i === activeIndex)
+    })
 
-      navLinks.forEach((link, i) => {
-        if (i <= activeIndex) {
-          link.classList.add('before:bg-primary-main')
-
-          if (i === activeIndex) {
-            link.classList.add('text-primary-main')
-          } else {
-            link.classList.remove('text-primary-main')
-          }
-        } else {
-          link.classList.remove('before:bg-primary-main')
-          link.classList.remove('text-primary-main')
-        }
-      })
-      const container = document.querySelector('aside')
-      const activeLink = navLinks[activeIndex]
-      if (activeLink && container) {
-        const containerRect = container.getBoundingClientRect()
-        const linkRect = activeLink.getBoundingClientRect()
-        if (linkRect.top < containerRect.top || linkRect.bottom > containerRect.bottom) {
-          activeLink.scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest',
-          })
-        }
+    const container = document.querySelector('aside nav')
+    const activeItem = trackerItems[activeIndex]
+    if (activeItem && container) {
+      const containerRect = container.getBoundingClientRect()
+      const itemRect = activeItem.getBoundingClientRect()
+      if (itemRect.top < containerRect.top || itemRect.bottom > containerRect.bottom) {
+        activeItem.scrollIntoView({ behavior: 'auto', block: 'nearest' })
       }
     }
+
+    // progress through the article, mirrored on the % label and segment bars
+    const articleRect = article.getBoundingClientRect()
+    const readHeight = Math.min(
+      Math.max(window.innerHeight - articleRect.top, 0),
+      articleRect.height,
+    )
+    const percentage = Math.round((readHeight / articleRect.height) * 100)
+
+    const label = document.querySelector('[data-progress-label]')
+    if (label) label.textContent = `${percentage}%`
+
+    document.querySelectorAll('[data-progress-bar]').forEach((bar) => {
+      const segments = Array.from(bar.children)
+      const filledCount = Math.round((percentage / 100) * segments.length)
+      segments.forEach((segment, i) => {
+        segment.classList.toggle('is-filled', i < filledCount)
+      })
+    })
   }
 
-  window.addEventListener('scroll', onScroll)
+  window.addEventListener('scroll', onScroll, { passive: true })
   document.addEventListener('astro:page-load', onScroll)
 </script>

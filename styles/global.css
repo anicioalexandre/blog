@@ -1,8 +1,44 @@
 @import './fonts.css';
+@import './tokens.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  ::selection {
+    background-color: rgb(var(--primary-main));
+    color: rgb(var(--object-contrast));
+  }
+}
+
+@layer components {
+  /* Win98 chrome — state changes snap, no easing */
+  .win-bevel {
+    background-color: rgb(var(--bevel-face));
+    box-shadow:
+      inset -1px -1px 0 rgb(var(--bevel-darker)),
+      inset 1px 1px 0 rgb(var(--bevel-light)),
+      inset -2px -2px 0 rgb(var(--bevel-dark));
+    transition: none;
+  }
+
+  .win-bevel:active {
+    box-shadow:
+      inset 1px 1px 0 rgb(var(--bevel-darker)),
+      inset -1px -1px 0 rgb(var(--bevel-light)),
+      inset 2px 2px 0 rgb(var(--bevel-dark));
+  }
+
+  .win-sunken {
+    background-color: rgb(var(--surface-default));
+    box-shadow:
+      inset 1px 1px 0 rgb(var(--bevel-darker)),
+      inset -1px -1px 0 rgb(var(--bevel-light)),
+      inset 2px 2px 0 rgb(var(--bevel-dark));
+    transition: none;
+  }
+}
 
 @layer base {
   .h-full-minus-layout {
@@ -17,23 +53,10 @@
     @apply absolute bottom-0 left-[30px] top-0 block w-[2px] bg-surface-border content-[''] first:top-[12px];
   }
 
-  .index-tracker-timeline {
-    transition-property: color;
-    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    transition-duration: 500ms;
-    @apply relative;
-  }
-
-  .index-tracker-timeline::before {
-    @apply absolute bottom-0 left-[0px] top-0 block w-[2px] bg-surface-border content-[''] first:top-[12px];
-    transition-property: background;
-    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    transition-duration: 500ms;
-  }
-
   .adjust-heading-scroll {
+    h2[id],
     h3[id] {
-      @apply scroll-mt-[150px] md:scroll-mt-24;
+      @apply scroll-mt-24;
     }
   }
 
@@ -63,11 +86,11 @@
   }
 
   .scrollbar::-webkit-scrollbar-track {
-    @apply rounded-3xl bg-surface-active;
+    @apply rounded-none bg-surface-active;
   }
 
   .scrollbar::-webkit-scrollbar-thumb {
-    @apply rounded-full border border-surface-border bg-surface-disabled;
+    @apply rounded-none border border-surface-border bg-surface-disabled;
   }
 
   .scrollbar::-webkit-scrollbar-thumb:hover {
