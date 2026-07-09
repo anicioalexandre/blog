@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /error
+Disallow: /api/
+
+Sitemap: https://alexandreanicio.dev/sitemap-index.xml

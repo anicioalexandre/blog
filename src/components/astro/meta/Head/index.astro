@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions'
 
+import { GITHUB_PROFILE, LINKEDIN_PROFILE } from 'constants/links'
 import { config } from 'constants/site'
 
 interface Props {
@@ -8,14 +9,55 @@ interface Props {
   description?: string
   image?: string
   date?: Date
+  noindex?: boolean
 }
-const { title, description = config.description, image, date } = Astro.props
+const { title, description = config.description, image, date, noindex = false } = Astro.props
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
 const socialImageURL = new URL(image ? image : '/aa.png', Astro.url).href
 
-const siteTitle = `${config.title} | ${title}`
+const siteTitle = `${title} | ${config.title}`
+
+const isHomepage = Astro.url.pathname === '/'
+
+const structuredData = date
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: title,
+      description,
+      url: canonicalURL.href,
+      mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalURL.href },
+      datePublished: date.toISOString(),
+      image: socialImageURL,
+      author: {
+        '@type': 'Person',
+        name: config.author,
+        url: config.site,
+      },
+    }
+  : isHomepage
+    ? {
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'Person',
+            name: config.author,
+            url: config.site,
+            jobTitle: 'Senior Software Engineer',
+            sameAs: [GITHUB_PROFILE, LINKEDIN_PROFILE],
+          },
+          {
+            '@type': 'WebSite',
+            name: config.title,
+            description: config.description,
+            url: config.site,
+            author: { '@type': 'Person', name: config.author },
+          },
+        ],
+      }
+    : undefined
 ---
 
 <meta charset="utf-8" />
@@ -38,6 +80,7 @@ const siteTitle = `${config.title} | ${title}`
 <meta name="generator" content={Astro.generator} />
 
 <link rel="canonical" href={canonicalURL} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
 
 <title>{siteTitle}</title>
 
@@ -52,6 +95,8 @@ const siteTitle = `${config.title} | ${title}`
 <meta property="og:title" content={siteTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={socialImageURL} />
+<meta property="og:site_name" content={config.title} />
+<meta property="og:locale" content={config.ogLocale} />
 {
   date && (
     <>
@@ -61,10 +106,12 @@ const siteTitle = `${config.title} | ${title}`
   )
 }
 
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={siteTitle} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={socialImageURL} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={Astro.url} />
+<meta name="twitter:title" content={siteTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={socialImageURL} />
+
+{structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
 
 <link rel="alternate" type="application/rss+xml" title={config.title} href="/rss.xml" />

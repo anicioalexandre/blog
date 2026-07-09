@@ -9,7 +9,7 @@ const code = (url.searchParams.get('code') ?? 'default') as ErrorCode
 const error = ERROR_CODE[code] || ERROR_CODE.default
 ---
 
-<RootLayout title="Error">
+<RootLayout title="Error" noindex>
   <div class="flex h-full w-full items-start justify-center md:pt-20">
     <div class="grid justify-items-center gap-8 rounded-lg bg-surface-active p-8">
       <div class="grid gap-2">
