@@ -3,7 +3,7 @@ export const config = {
   author: 'Alexandre Anício',
   title: 'aa dev',
   description:
-    'A space to share my journey as an engineer, exploring frontend, backend, cloud, and automation, driven by curiosity and continuous learning.',
+    'A space to share my journey as an engineer, exploring backend, cloud and infrastructure, frontend, and AI engineering, driven by curiosity and continuous learning.',
   lang: 'en-US',
   ogLocale: 'en_US',
 }
